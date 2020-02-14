@@ -10,12 +10,10 @@ const tasks = (state = [], action) => {
           completed: false
         }
       ]
+    case 'EDIT_TASK':
+      return state.map(t => t.id === action.id ? { ...t, text: action.text} : t);
     case 'TOGGLE_TASK':
-      const newState = [...state];
-      const toggledTask = newState.find(t => t.id === action.id);
-      toggledTask.completed = !toggledTask.completed;
-      console.log(`new state: ${JSON.stringify(newState)}`)
-      return newState;
+      return state.map(t => t.id === action.id ? {...t, completed: !t.completed} : t);
     default:
       return state
   }

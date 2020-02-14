@@ -2,8 +2,8 @@
 [x] get `parentTask` working for proper nesting
 [x] indent tasks properly
 [x] checkbox to complete task
-[ ] basic styling
-[ ] allow editing of tasks
+[x] basic styling
+[x] allow editing of tasks
 [ ] allow deleting of tasks
 [ ] filter to show / hide tasks
 [ ] create check list templates

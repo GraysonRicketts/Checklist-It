@@ -16,6 +16,12 @@ export const toggleTask = id => ({
   id
 })
 
+export const editTask = (id, text) => ({
+  type: 'EDIT_TASK',
+  id,
+  text
+})
+
 export const VisibilityFilters = {
   SHOW_ALL: 'SHOW_ALL',
   SHOW_COMPLETED: 'SHOW_COMPLETED',

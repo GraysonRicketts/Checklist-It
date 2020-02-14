@@ -6,12 +6,9 @@ function TaskList(props) {
     
     return (
         <div className="task-list-div">
-            {tasks.map(({ id, text, subTasks, completed }) =>
+            {tasks.map(({ id }) =>
                 (<Task
                     key={id}
-                    text={text}
-                    subTasks={subTasks}
-                    completed={completed}
                     id={id}
                 />))}
         </div>
