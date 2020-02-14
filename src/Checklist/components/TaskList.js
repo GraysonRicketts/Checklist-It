@@ -5,7 +5,7 @@ function TaskList(props) {
     const { tasks } = props;
     
     return (
-        <div>
+        <div className="task-list-div">
             {tasks.map(({ id, text, subTasks, completed }) =>
                 (<Task
                     key={id}

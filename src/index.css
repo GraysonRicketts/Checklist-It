@@ -8,6 +8,14 @@ body {
   width: 100%;
 }
 
+.task-input {
+  min-width: 0;
+}
+
+.task-list-div {
+  margin-left: 1em;
+}
+
 .main-section {
   width: 90%;
   margin: 0 auto;

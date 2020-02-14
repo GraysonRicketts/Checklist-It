@@ -22,7 +22,7 @@ function AddTask(props) {
         <div>
             <form onSubmit={onSubmit} className="add-task-form">
                 <button type="submit">Add</button>
-                <input
+                <input type="text" className="task-input"
                     ref={node => {
                         input = node
                     }}

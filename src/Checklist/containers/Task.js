@@ -5,10 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { toggleTask as toggleTaskAction } from '../tasks.actions';
 import styled from 'styled-components';
 
-const StyledTaskList = styled(TaskList)`
-    width: calc(100% - 1em);
-`;
-
 function Task(props) {
     const { text, completed, id } = props;
     const subTasks = useSelector(state => state.tasks.filter(t => t.parentTask === id));
@@ -27,10 +23,12 @@ function Task(props) {
                 <p style={{ textDecoration: completed ? 'line-through' : 'none' }}>{text}</p>
             </div>
 
-            {subTasks ? <StyledTaskList
-                tasks={subTasks}
-                parentTask={id}
-            /> : null}
+            {subTasks ?
+                    <TaskList
+                        tasks={subTasks}
+                        parentTask={id} />
+
+                : null}
 
             <div className="inline-add-task">
                 <AddTask parentTask={id} />
