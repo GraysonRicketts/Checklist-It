@@ -6,9 +6,8 @@ export const addTask = (text, parentTask) => ({
   parentTask
 })
 
-export const setVisibilityFilter = filter => ({
-  type: 'SET_VISIBILITY_FILTER',
-  filter
+export const toggleVisibility = () => ({
+  type: 'TOGGLE_VISIBILITY_FILTER'
 })
 
 export const toggleTask = id => ({
@@ -26,9 +25,3 @@ export const deleteTask = (id) => ({
   type: 'DELETE_TASK',
   id
 })
-
-export const VisibilityFilters = {
-  SHOW_ALL: 'SHOW_ALL',
-  SHOW_COMPLETED: 'SHOW_COMPLETED',
-  SHOW_ACTIVE: 'SHOW_ACTIVE'
-}

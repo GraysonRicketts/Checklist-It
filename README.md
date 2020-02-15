@@ -4,8 +4,11 @@
 [x] checkbox to complete task
 [x] basic styling
 [x] allow editing of tasks
-[ ] allow deleting of tasks
-[ ] filter to show / hide tasks
+[x] allow deleting of tasks
+[x] filter to show / hide tasks
+
+![] fix bug with sub tasks
+
 [ ] create check list templates
 [ ] create check list sessions from templates
 [ ] create login pages

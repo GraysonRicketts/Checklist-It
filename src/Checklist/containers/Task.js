@@ -10,7 +10,10 @@ import {
 
 function Task(props) {
     const { id } = props;
-    const { text, completed, subTasks} = useSelector(state => state.tasks.find(t => t.id === id));
+    const { text, completed } = useSelector(state => state.tasks.find(t => t.id === id));
+    const subTasks = useSelector(state => state.tasks.filter(t => t.parentTask !== id));
+    console.log(JSON.stringify(subTasks))
+    const hideCompleted = useSelector(state => state.visiblity);
     const dispatch = useDispatch();
 
     const toggleTask = () => {
@@ -36,8 +39,9 @@ function Task(props) {
 
             {subTasks ?
                     <TaskList
-                        tasks={subTasks}
-                        parentTask={id} />
+                        tasks={subTasks.length ? subTasks : []}
+                        hideCompleted={hideCompleted}
+                    />
 
                 : null}
 
