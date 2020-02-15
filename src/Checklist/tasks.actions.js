@@ -22,6 +22,11 @@ export const editTask = (id, text) => ({
   text
 })
 
+export const deleteTask = (id) => ({
+  type: 'DELETE_TASK',
+  id
+})
+
 export const VisibilityFilters = {
   SHOW_ALL: 'SHOW_ALL',
   SHOW_COMPLETED: 'SHOW_COMPLETED',

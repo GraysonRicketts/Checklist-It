@@ -2,7 +2,11 @@ import React from 'react';
 import TaskList from '../components/TaskList';
 import AddTask from './AddTask'
 import { useSelector, useDispatch } from "react-redux";
-import { toggleTask as toggleTaskAction, editTask as editTaskAction } from '../tasks.actions';
+import { 
+    toggleTask as toggleTaskAction, 
+    editTask as editTaskAction,
+    deleteTask as deleteTaskAction
+ } from '../tasks.actions';
 
 function Task(props) {
     const { id } = props;
@@ -17,12 +21,17 @@ function Task(props) {
         dispatch(editTaskAction(id, event.target.value));
     }
 
+    const deleteTask = () => {
+        dispatch(deleteTaskAction(id));
+    }
+
     return (
         <div className="task-section">
             <div className="task-text-div">
                 <input type="checkbox" onChange={toggleTask} checked={completed} />
                 <input type="text" value={text} onChange={updateTask} className="task-input" 
                 style={{textDecoration: completed ? 'line-through' : 'none'}}/>
+                <button type="button" onClick={deleteTask}>X</button>
             </div>
 
             {subTasks ?
