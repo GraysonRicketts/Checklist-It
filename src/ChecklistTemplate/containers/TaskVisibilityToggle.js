@@ -1,6 +1,5 @@
 import React from 'react';
-import { toggleVisibility as toggleVisibilityAction } from '../tasks.actions';
-import { connect } from 'react-redux';
+import { toggleVisibility as toggleVisibilityAction } from '../visibility.actions';
 import { useDispatch } from "react-redux";
 import Toggle from '../components/Toggle';
 
@@ -19,4 +18,4 @@ function TaskVisibilityToggle() {
     );
 }
 
-export default connect()(TaskVisibilityToggle);
+export default TaskVisibilityToggle;

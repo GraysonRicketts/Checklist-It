@@ -6,15 +6,20 @@
 [x] allow editing of tasks
 [x] allow deleting of tasks
 [x] filter to show / hide tasks
-
-![] fix bug with sub tasks
-
-[ ] create check list templates
+[x] create check list templates
+[ ] create homescreen to create template or choose checklist
+[ ] create check list page
 [ ] create check list sessions from templates
 [ ] create login pages
 [ ] style things
 [ ] backend stuff
 
+## Notes
+
+### Errors
+
+- "System limit for number of file watchers reached"
+    - `rm -rf node_modules; npm i`
 
 --------------------------------------------------------------------------------------------------------
 

@@ -11,8 +11,7 @@ import {
 function Task(props) {
     const { id } = props;
     const { text, completed } = useSelector(state => state.tasks.find(t => t.id === id));
-    const subTasks = useSelector(state => state.tasks.filter(t => t.parentTask !== id));
-    console.log(JSON.stringify(subTasks))
+    const subTasks = useSelector(state => state.tasks.filter(t => t.parentTask === id));
     const hideCompleted = useSelector(state => state.visiblity);
     const dispatch = useDispatch();
 
@@ -37,9 +36,9 @@ function Task(props) {
                 <button type="button" onClick={deleteTask}>X</button>
             </div>
 
-            {subTasks ?
+            {subTasks.length ?
                     <TaskList
-                        tasks={subTasks.length ? subTasks : []}
+                        tasks={subTasks}
                         hideCompleted={hideCompleted}
                     />
 

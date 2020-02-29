@@ -1,5 +1,5 @@
 import React from 'react';
-import VisibleTaskList from '../Checklist/containers/VisibleTaskList';
+import TaskListTemplate from '../ChecklistTemplate/containers/TaskListTemplate';
 
 function App() {
 
@@ -11,10 +11,10 @@ function App() {
 
       <section className="main-section">
         <header>
-          <h1>Checklist</h1>
+          <h1>Checklist Template Creator</h1>
         </header>
 
-        <VisibleTaskList />
+        <TaskListTemplate />
       </section>
 
       <footer>

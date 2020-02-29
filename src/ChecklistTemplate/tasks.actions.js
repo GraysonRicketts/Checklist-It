@@ -6,10 +6,6 @@ export const addTask = (text, parentTask) => ({
   parentTask
 })
 
-export const toggleVisibility = () => ({
-  type: 'TOGGLE_VISIBILITY_FILTER'
-})
-
 export const toggleTask = id => ({
   type: 'TOGGLE_TASK',
   id
