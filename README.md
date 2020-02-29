@@ -7,9 +7,12 @@
 [x] allow deleting of tasks
 [x] filter to show / hide tasks
 [x] create check list templates
-[ ] create homescreen to create template or choose checklist
-[ ] create check list page
-[ ] create check list sessions from templates
+[x] create homescreen to navigate to create template
+[ ] actual checklist
+    [ ] create checklist data
+    [ ] show in-progress checklists on homepage
+    [ ] create checklist page
+    [ ] create new checklists from saved template
 [ ] create login pages
 [ ] style things
 [ ] backend stuff

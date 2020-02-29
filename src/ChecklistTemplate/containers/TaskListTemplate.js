@@ -22,6 +22,10 @@ function TaskListTemplate() {
 
     return (
         <div className="visible-tasks-div">
+            <header>
+                <h1>Checklist Template Creator</h1>
+            </header>
+            
             <label htmlFor="template-name">Checklist name</label>
             <input type="text" id="template-name" value={checkListName} onChange={handleCheckListNameChange} />
 

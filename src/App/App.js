@@ -1,26 +1,45 @@
 import React from 'react';
 import TaskListTemplate from '../ChecklistTemplate/containers/TaskListTemplate';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Home from './Home';
 
 function App() {
 
   return (
-    <>
+    <Router>
+      <>
       <nav>
-        {/* TODO: Add nav */}
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/createChecklist">Create a Checklist Template</Link>
+          </li>
+        </ul>
       </nav>
 
       <section className="main-section">
-        <header>
-          <h1>Checklist Template Creator</h1>
-        </header>
-
-        <TaskListTemplate />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/createChecklist">
+            <TaskListTemplate />
+          </Route>
+        </Switch>
       </section>
 
       <footer>
         {/* TODO: Add footer */}
       </footer>
-    </>
+      </>
+    </Router>
   );
 }
 
