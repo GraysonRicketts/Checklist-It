@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addTask } from '../tasks.actions';
+import { addTask } from '../../common/tasks.actions';
 import { useDispatch } from "react-redux";
 
 
@@ -13,6 +13,7 @@ function AddTask(props) {
             return
         }
         dispatch(addTask(taskInput.trim(), parentTask))
+        setTaskInput('');
     }
 
     const handleTaskInputChange = (e) => {

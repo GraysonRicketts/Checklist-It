@@ -21,3 +21,12 @@ export const deleteTask = (id) => ({
   type: 'DELETE_TASK',
   id
 })
+
+export const resetTasks = () => ({
+  type: 'RESET_TASKS'
+});
+
+export const setTasks = (tasks) => ({
+  type: 'SET_TASKS',
+  tasks
+})

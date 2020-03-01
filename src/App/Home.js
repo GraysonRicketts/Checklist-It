@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function Home() {
     return (
         <>
-            <header>Landing page</header>
+            <h1>Landing page</h1>
             <Link to="/createChecklist">Create a Checklist Template</Link>
         </>
     );

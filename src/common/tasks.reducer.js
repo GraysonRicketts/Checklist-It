@@ -16,6 +16,10 @@ const tasks = (state = [], action) => {
       return state.map(t => t.id === action.id ? {...t, completed: !t.completed} : t);
     case 'DELETE_TASK':
       return state.filter(t => t.id !== action.id);
+    case 'RESET_TASKS':
+      return state = []
+    case 'SET_TASKS':
+      return state = action.tasks;
     default:
       return state
   }

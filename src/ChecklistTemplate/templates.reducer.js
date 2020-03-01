@@ -1,10 +1,11 @@
-const template = (state = [], action) => {
+const templates = (state = [], action) => {
     console.log(`template action: ${JSON.stringify(action)}`)
     switch(action.type) {
         case 'SAVE_TEMPLATE': 
             return [
                 ...state,
                 {
+                    id: action.id,
                     name: action.name,
                     dateUTC: action.dateUTC,
                     tasks: [...action.tasks]
@@ -15,4 +16,4 @@ const template = (state = [], action) => {
     }
 }
 
-export default template
+export default templates

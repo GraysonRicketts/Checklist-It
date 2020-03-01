@@ -7,6 +7,8 @@ import {
   Link
 } from "react-router-dom";
 import Home from './Home';
+import CreateChecklist from '../Checklist/container/CreateChecklist';
+import VisibleChecklist from '../Checklist/container/VisibleChecklist';
 
 function App() {
 
@@ -19,7 +21,10 @@ function App() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/createChecklist">Create a Checklist Template</Link>
+            <Link to="/createChecklistTemplate">Create a Checklist Template</Link>
+          </li>
+          <li>
+            <Link to="/createChecklist">Create a Checklist</Link>
           </li>
         </ul>
       </nav>
@@ -29,8 +34,14 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/createChecklist">
+          <Route path="/createChecklistTemplate">
             <TaskListTemplate />
+          </Route>
+          <Route path="/createChecklist">
+            <CreateChecklist />
+          </Route>
+          <Route path="/checklist:id">
+            <VisibleChecklist />
           </Route>
         </Switch>
       </section>

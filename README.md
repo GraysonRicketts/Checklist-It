@@ -9,10 +9,11 @@
 [x] create check list templates
 [x] create homescreen to navigate to create template
 [ ] actual checklist
-    [ ] create checklist data
+    [x] create "create checklist" page
+    [x] create new checklists from saved template
+    [~] create checklist page
+    [ ] create default checklist data so don't have to create template etc.
     [ ] show in-progress checklists on homepage
-    [ ] create checklist page
-    [ ] create new checklists from saved template
 [ ] create login pages
 [ ] style things
 [ ] backend stuff

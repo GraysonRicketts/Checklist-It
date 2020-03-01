@@ -1,7 +1,7 @@
 import React from 'react';
 import { toggleVisibility as toggleVisibilityAction } from '../visibility.actions';
 import { useDispatch } from "react-redux";
-import Toggle from '../components/Toggle';
+import Toggle from '../../common/components/Toggle';
 
 
 function TaskVisibilityToggle() {
