@@ -40,7 +40,7 @@ function App() {
           <Route path="/createChecklist">
             <CreateChecklist />
           </Route>
-          <Route path="/checklist:id">
+          <Route path="/checklist/:checklistId">
             <VisibleChecklist />
           </Route>
         </Switch>

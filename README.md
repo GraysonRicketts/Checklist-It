@@ -11,7 +11,11 @@
 [ ] actual checklist
     [x] create "create checklist" page
     [x] create new checklists from saved template
-    [~] create checklist page
+    [x] create checklist page
+    [ ] add edit name of checklists functionality
+    [ ] redux actions & reducers for checklists
+    [ ] redux actions & reducers for templates
+    [ ] get rid of task actions & reducers
     [ ] create default checklist data so don't have to create template etc.
     [ ] show in-progress checklists on homepage
 [ ] create login pages

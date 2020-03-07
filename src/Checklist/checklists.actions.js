@@ -4,7 +4,7 @@ export const updateChecklist = (tasks) => ({
 });
 
 let nextTodoId = 1
-export const createChecklist = (tasks) => ({
+export const createChecklist = (name, tasks) => ({
     type: 'CREATE_CHECKLIST',
     id: nextTodoId++,
     tasks

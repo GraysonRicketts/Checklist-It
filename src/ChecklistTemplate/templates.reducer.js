@@ -1,5 +1,4 @@
 const templates = (state = [], action) => {
-    console.log(`template action: ${JSON.stringify(action)}`)
     switch(action.type) {
         case 'SAVE_TEMPLATE': 
             return [

@@ -19,7 +19,7 @@ function Task(props) {
         <div className="task-section">
             <div className="task-text-div">
                 <input type="checkbox" onChange={toggleTask} checked={completed} />
-                <p style={{textDecoration: completed ? 'line-through' : 'none'}}>{text}</p>/>
+                <p style={{textDecoration: completed ? 'line-through' : 'none'}}>{text}</p>
             </div>
 
             {subTasks.length ?

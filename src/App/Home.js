@@ -5,7 +5,7 @@ function Home() {
     return (
         <>
             <h1>Landing page</h1>
-            <Link to="/createChecklist">Create a Checklist Template</Link>
+            <Link to="/createChecklist">Create a Checklist</Link>
         </>
     );
 }

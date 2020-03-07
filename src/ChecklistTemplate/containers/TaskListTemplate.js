@@ -3,14 +3,17 @@ import Task from './Task';
 import AddTask from './AddTask';
 import { useSelector, useDispatch } from "react-redux";
 import { saveTemplate } from '../templates.actions';
+import { useHistory } from "react-router-dom";
 
 function TaskListTemplate() {
     const [checkListName, setChecklistName] = useState('')
     const tasks = useSelector(state => state.tasks.filter(t => !t.parentTask));
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleSaveTemplate = () => {
         dispatch(saveTemplate(tasks, checkListName))
+        history.push('/');
     }
 
     const handleCheckListNameChange = (e) => {

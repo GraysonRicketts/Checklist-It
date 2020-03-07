@@ -6,6 +6,7 @@ const checklists = (state = [], action) => {
           {
             id: action.id,
             tasks: action.tasks,
+            name: action.name,
             createdAtUTC: Date.now()
           }
         ]

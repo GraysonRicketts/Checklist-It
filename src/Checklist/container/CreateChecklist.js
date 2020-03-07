@@ -1,15 +1,18 @@
 import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { createChecklist } from '../checklists.actions';
+import { useHistory } from "react-router-dom";
 
 function CreateChecklist() {
     const templates = useSelector(state => state.templates);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleCreateChecklistClicked = (templateId) => {
-        const tasks = [...(templates.find(t => t.id === templateId)).tasks];
-        console.log(`Creating checklist: ${tasks.toString()}`)
-        dispatch(createChecklist(tasks));
+        const template = templates.find(t => t.id === templateId);
+        const createAction = dispatch(createChecklist(template.name, [...template.tasks]));
+
+        history.push(`/checklist/${createAction.id}`);
     }
 
     return (
