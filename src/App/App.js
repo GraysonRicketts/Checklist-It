@@ -10,24 +10,28 @@ import Home from './Home';
 import CreateChecklist from '../Checklist/container/CreateChecklist';
 import VisibleChecklist from '../Checklist/container/VisibleChecklist';
 import { useDispatch } from "react-redux";
-import { updateTemplate } from '../ChecklistTemplate/templates.actions'
+import { updateTemplate, createTemplate } from '../ChecklistTemplate/templates.actions'
 import CreateTemplate from '../ChecklistTemplate/containers/CreateTemplate';
 
 function App() {
   // TODO: remove, only for faster testing
   const dispatch = useDispatch();
-  dispatch(updateTemplate([
+  dispatch(createTemplate())
+  dispatch(updateTemplate("1", [
     {
-      "id": 1,
-      "text": "one"
+      "id": "1",
+      "text": "one",
+      "parentTask": undefined
     },
     {
-      "id": 2,
-      "text": "two"
+      "id": "2",
+      "text": "two",
+      "parentTask": "1"
     },
     {
-      "id": 3,
-      "text": "three"
+      "id": "3",
+      "text": "three",
+      "parentTask": undefined
     }
   ], 'defaultedData'));
 
