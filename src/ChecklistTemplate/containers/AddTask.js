@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { addTask } from '../../common/tasks.actions';
+import { createTask } from '../templates.actions';
 import { useDispatch } from "react-redux";
 
 
 function AddTask(props) {
+    const { templateId, parentTask } = props;
     const [taskInput, setTaskInput] = useState('');
-    const { parentTask } = props;
     const dispatch = useDispatch();
 
     const handleAddTask = () => {
         if (!taskInput.trim()) {
             return
         }
-        dispatch(addTask(taskInput.trim(), parentTask))
+        dispatch(createTask(templateId, taskInput.trim(), parentTask))
         setTaskInput('');
     }
 

@@ -1,31 +1,32 @@
 import React from 'react';
 import AddTask from './AddTask'
 import { useSelector, useDispatch } from "react-redux";
-import {
-    editTask as editTaskAction,
-    deleteTask as deleteTaskAction
- } from '../../common/tasks.actions';
-
+import { updateTask, deleteTask } from '../templates.actions';
+ 
 function Task(props) {
-    const { id } = props;
-    const { text, completed } = useSelector(state => state.tasks.find(t => t.id === id));
-    const subTasks = useSelector(state => state.tasks.filter(t => t.parentTask === id));
+    const { id, templateId } = props;
+    const { text } = useSelector(state => state
+        .templates.find(t => t.id === templateId)
+        .tasks.find(t => t.id === id));
+    const subTasks = useSelector(state => state
+        .templates.find(t => t.id === templateId)
+        .tasks.filter(t => t.parentTask === id));
     const dispatch = useDispatch();
 
-    const updateTask = (event) => {
-        dispatch(editTaskAction(id, event.target.value));
+    const handleAddTask = (event) => {
+        const newTaskText = event.target.value.trim();
+        dispatch(updateTask(templateId, id, newTaskText));
     }
 
-    const deleteTask = () => {
-        dispatch(deleteTaskAction(id));
+    const handleDeleteTask = () => {
+        dispatch(deleteTask(templateId, id));
     }
 
     return (
         <div className="task-section">
             <div className="task-text-div">
-                <input type="text" value={text} onChange={updateTask} className="task-input" 
-                style={{textDecoration: completed ? 'line-through' : 'none'}}/>
-                <button type="button" onClick={deleteTask}>X</button>
+                <input type="text" value={text} onChange={handleAddTask} className="task-input"/>
+                <button type="button" onClick={handleDeleteTask}>X</button>
             </div>
 
             {subTasks.length ?
@@ -35,6 +36,7 @@ function Task(props) {
                             (<Task
                                 key={id}
                                 id={id}
+                                templateId={templateId}
                             />
                         ))
                     }
@@ -43,7 +45,7 @@ function Task(props) {
                 : null}
 
             <div className="inline-add-task">
-                <AddTask parentTask={id} />
+                <AddTask parentTask={id} templateId={templateId} />
             </div>
         </div>
     );
