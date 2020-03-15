@@ -1,24 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Task from './Task';
 import AddTask from './AddTask';
 import { useSelector, useDispatch } from "react-redux";
-import { saveTemplate } from '../templates.actions';
-import { useHistory } from "react-router-dom";
+import { updateTemplate } from '../templates.actions';
+import { useHistory, useParams } from "react-router-dom";
 
 function TaskListTemplate() {
-    const [checkListName, setChecklistName] = useState('')
-    const tasks = useSelector(state => state.tasks.filter(t => !t.parentTask));
+    const { templateId } = useParams();
+    const template = useSelector(state => state.templates.find(t => t.id === templateId));
     const dispatch = useDispatch();
     const history = useHistory();
 
     const handleSaveTemplate = () => {
-        dispatch(saveTemplate(tasks, checkListName))
+        dispatch(updateTemplate(template.tasks, template.name))
         history.push('/');
     }
 
     const handleCheckListNameChange = (e) => {
         e.preventDefault();
-        setChecklistName(e.target.value);
+        const newTemplateName = e.target.value.trim();
+        dispatch(updateTemplate(templateId, null, newTemplateName));
     }
 
     return (
@@ -28,17 +29,19 @@ function TaskListTemplate() {
             </header>
 
             <label htmlFor="template-name">Checklist name</label>
-            <input type="text" id="template-name" value={checkListName} onChange={handleCheckListNameChange} />
+            <input type="text" id="template-name" value={template.name} onChange={handleCheckListNameChange} />
 
-            <AddTask />
+            <AddTask templateId={templateId} />
 
-            {tasks.length > 0 ? (
+            {template.tasks.filter(t => !t.parentTask).length > 0 ? (
                 <div className="task-list-div">
-                    {tasks
+                    {template.tasks
+                        .filter(t => !t.parentTask)
                         .map(({ id }) =>
                             (<Task
                                 key={id}
                                 id={id}
+                                templateId={templateId}
                             />
                         ))
                     }

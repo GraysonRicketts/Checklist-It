@@ -9,8 +9,27 @@ import {
 import Home from './Home';
 import CreateChecklist from '../Checklist/container/CreateChecklist';
 import VisibleChecklist from '../Checklist/container/VisibleChecklist';
+import { useDispatch } from "react-redux";
+import { updateTemplate } from '../ChecklistTemplate/templates.actions'
+import CreateTemplate from '../ChecklistTemplate/containers/CreateTemplate';
 
 function App() {
+  // TODO: remove, only for faster testing
+  const dispatch = useDispatch();
+  dispatch(updateTemplate([
+    {
+      "id": 1,
+      "text": "one"
+    },
+    {
+      "id": 2,
+      "text": "two"
+    },
+    {
+      "id": 3,
+      "text": "three"
+    }
+  ], 'defaultedData'));
 
   return (
     <Router>
@@ -35,6 +54,9 @@ function App() {
             <Home />
           </Route>
           <Route path="/createChecklistTemplate">
+            <CreateTemplate />
+          </Route>
+          <Route path="/template/:templateId">
             <TaskListTemplate />
           </Route>
           <Route path="/createChecklist">

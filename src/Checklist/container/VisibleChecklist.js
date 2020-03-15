@@ -1,12 +1,13 @@
 import React from 'react';
 import TaskVisibilityToggle from './TaskVisibilityToggle';
 import Task from './Task';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 function VisibleChecklist() {
-    let { checklistId } = useParams();
-    const checklist = useSelector(state => state.checklists.find(c => c.id.toString() === checklistId));
+    const { checklistId } = useParams();
+    const checklist = useSelector(state => state
+        .checklists.find(c => c.id.toString() === checklistId));
     const hideCompleted = useSelector(state => state.visiblity);
     
     return (
@@ -17,11 +18,12 @@ function VisibleChecklist() {
 
                     {checklist.tasks.length ? (
                         checklist.tasks
-                            .filter(t => !(t.completed && hideCompleted))
+                            .filter(t => !(t.completed && hideCompleted) && !t.parentTask)
                             .map(({ id }) =>
                                 (<Task
                                     key={id}
                                     id={id}
+                                    checklistId={checklistId}
                                 />
                             ))
                     ) : null}
