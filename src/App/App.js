@@ -9,9 +9,11 @@ import {
 import Home from './Home';
 import CreateChecklist from '../Checklist/container/CreateChecklist';
 import VisibleChecklist from '../Checklist/container/VisibleChecklist';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateTemplate, createTemplate } from '../ChecklistTemplate/templates.actions'
 import CreateTemplate from '../ChecklistTemplate/containers/CreateTemplate';
+import Login from '../Account/container/Login';
+import { logout } from '../Account/user.actions';
 
 function App() {
   // TODO: remove, only for faster testing
@@ -35,6 +37,12 @@ function App() {
     }
   ], 'defaultedData'));
 
+  const loggedInUser = useSelector(s => s.user);
+
+  const handleLogout = () => {
+    dispatch(logout);
+  }
+
   return (
     <Router>
       <>
@@ -48,6 +56,9 @@ function App() {
           </li>
           <li>
             <Link to="/createChecklist">Create a Checklist</Link>
+          </li>
+          <li>
+            {loggedInUser ? <a href="" onClick={handleLogout}>Logout</a> : <Link to="/login">Login</Link>}
           </li>
         </ul>
       </nav>
@@ -68,6 +79,9 @@ function App() {
           </Route>
           <Route path="/checklist/:checklistId">
             <VisibleChecklist />
+          </Route>
+          <Route path="/login">
+            <Login />
           </Route>
         </Switch>
       </section>
