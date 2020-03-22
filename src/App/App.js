@@ -14,6 +14,7 @@ import { updateTemplate, createTemplate } from '../ChecklistTemplate/templates.a
 import CreateTemplate from '../ChecklistTemplate/containers/CreateTemplate';
 import Login from '../Account/container/Login';
 import { logout } from '../Account/user.actions';
+import Signup from '../Account/container/Signup';
 
 function App() {
   // TODO: remove, only for faster testing
@@ -82,6 +83,9 @@ function App() {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/signup">
+            <Signup />
           </Route>
         </Switch>
       </section>

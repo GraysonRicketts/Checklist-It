@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { login } from '../user.actions';
  
 function Login(props) {
@@ -28,17 +28,21 @@ function Login(props) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                email: <input type="text" value={email} onChange={onEmailChange} />        
-            </label>
+        <div>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    email: <input type="text" value={email} onChange={onEmailChange} />        
+                </label>
 
-            <label>
-                password: <input type="password" value={password} onChange={onPasswordChange} />        
-            </label>
+                <label>
+                    password: <input type="password" value={password} onChange={onPasswordChange} />        
+                </label>
 
-            <input type="submit" value="Log in" />
-        </form>
+                <input type="submit" value="Log in" />
+            </form>
+
+            <Link to="/signup">Sign up</Link>
+        </div>
     );
 }
 
