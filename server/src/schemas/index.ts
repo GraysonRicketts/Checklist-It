@@ -1,29 +1,44 @@
 import { buildSchema } from 'graphql';
 
 const schema = buildSchema(`
-type Template{
+type Template {
     id: ID!,
     name: String!,
     tasks: [TemplateTask]!
 }
 
-type TemplateTask{
-    id: ID,
+type TemplateTask {
+    id: ID!,
     text: String!,
     parentTask: ID
 }
 
-input TemplateTaskInput {
+type Checklist {
+    id: ID!,
+    name: String!
+    tasks: [ChecklistTask]!,
+}
+
+type ChecklistTask {
+    id: ID!,
+    text: String!,
+    completed: Boolean!,
+    parentTask: ID
+}
+
+input TaskInput {
     text: String!,
     parentTask: ID
 }
 
 type Query {
     template(id: ID!): Template
+    checklist(id: ID!): Checklist
 }
 
 type Mutation {
-    addTemplate(name: String!, tasks: [TemplateTaskInput]!): Template
+    addTemplate(name: String!, tasks: [TaskInput]!): Template
+    addChecklist(name: String!, templateId: ID!): Checklist
 }
 `);
 

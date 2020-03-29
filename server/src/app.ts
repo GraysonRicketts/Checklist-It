@@ -1,4 +1,4 @@
-import express, { NextFunction, Request } from 'express';
+import express from 'express';
 import graphqlHTTP from 'express-graphql';
 
 import schema from './schemas';
@@ -26,8 +26,8 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 // Routes
-app.get('/healthcheck', (_, res) => {
-    res.status(200).send('Server is running');
+app.get('/status', (_, res) => {
+    res.status(200).end();
 });
 
 
