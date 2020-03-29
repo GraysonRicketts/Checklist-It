@@ -1,0 +1,8 @@
+# build artifacts
+dist/*
+
+# data definition files
+**/*.d.ts
+
+# custom definition files
+/src/types/
