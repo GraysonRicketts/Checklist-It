@@ -3,7 +3,6 @@ import { Template } from '../models/Template';
 const templates: Template[] = [];
 function getTemplate(args: any): Template | void {
     const { id } = args;
-    console.log('get template')
     return templates.find(t => t.id === id);
 }
 
@@ -14,7 +13,6 @@ function getNextId() {
 
 function addTemplate(args: any): Template {
     const { name, tasks } = args;
-    console.log('adding template');
 
     const template: Template = {
         id: getNextId(),
