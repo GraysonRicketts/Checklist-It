@@ -30,6 +30,7 @@ export default class ChecklistModel {
     }
 
     findOne(id: string): Checklist | void {
+        // TODO: make DB call
         return this.checklists.find(c => c.id === id);
     }
 
@@ -45,6 +46,7 @@ export default class ChecklistModel {
             name
         };
 
+        // TODO: make DB call
         this.checklists.push(checklist);
 
         return checklist;

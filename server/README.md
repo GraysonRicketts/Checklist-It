@@ -1,5 +1,5 @@
 # TODO:
-- [ ] instantiate services and run locally
-- ??? do args get seperated out in api or service ???
-- [ ] add tests for services
+- [x] instantiate services and run locally
+- [x] add user model
+- [ ] add auth endpoints (i.e. login, logout)
 - [ ] add auth

@@ -29,6 +29,7 @@ export default class TemplateModel {
     }
 
     findOne(id: string): Template | void {
+        // TODO: make DB call
         return this.templates.find(t => t.id === id);
     }
 
@@ -44,6 +45,7 @@ export default class TemplateModel {
             name
         };
 
+        // TODO: make DB call
         this.templates.push(template);
 
         return template;
