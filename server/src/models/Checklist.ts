@@ -1,24 +1,24 @@
 export type Checklist = {
-    id: string,
-    name: string,
-    tasks: ChecklistTask[]
+    id: string;
+    name: string;
+    tasks: ChecklistTask[];
 }
 
 export type ChecklistTask = {
-    id: string,
-    text: string,
-    completed: boolean
-    parentTask?: string
+    id: string;
+    text: string;
+    completed: boolean;
+    parentTask?: string;
 }
 
 type ChecklistInput = {
-    name: string,
-    tasks: ChecklistTaskInput[]
+    name: string;
+    tasks: ChecklistTaskInput[];
 }
 
 type ChecklistTaskInput = {
-    text: string,
-    parentTask?: string
+    text: string;
+    parentTask?: string;
 }
 
 export default class ChecklistModel {
@@ -43,7 +43,7 @@ export default class ChecklistModel {
             id: this.getNextId(),
             tasks: tasks.map(t => ({...t, id: this.getNextId()} as ChecklistTask)),
             name
-        }
+        };
 
         this.checklists.push(checklist);
 

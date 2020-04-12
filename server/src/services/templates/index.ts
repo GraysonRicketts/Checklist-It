@@ -1,4 +1,4 @@
-import { Template } from '../../models/Template';
+import { Template, TemplateTask } from '../../models/Template';
 import TemplateModel from '../../models/Template';
 
 export default class TemplateService {
@@ -7,13 +7,11 @@ export default class TemplateService {
         this.templateModel = templateModel;
     }
 
-    public get(args: any): Template | void {
-        const { id } = args;
+    public get(id: string): Template | void {
         return this.templateModel.findOne(id);
     }
     
-    public add(args: any): Template {
-        const { name, tasks } = args;
+    public add(name: string, tasks: TemplateTask[]): Template {
         return this.templateModel.insertOne({name, tasks});
     }
 }

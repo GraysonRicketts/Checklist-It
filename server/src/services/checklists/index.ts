@@ -9,14 +9,11 @@ export default class ChecklistService {
         this.checklistModel = checklistModel;
     }
 
-    public get(args: any): Checklist | void {
-        const { id } = args;
+    public get(id: string): Checklist | void {
         return this.checklistModel.findOne(id);
     }
     
-    public add(args: any): Checklist {
-        const { name, templateId } = args;
-
+    public add(name: string, templateId: string): Checklist {
         // Create checklist from template
         const template = this.templateModel.findOne(templateId);
         if (!template) {
@@ -27,7 +24,7 @@ export default class ChecklistService {
         const tasks = template.tasks.map(t => ({
             ...t,
             completed: false
-        } as ChecklistTask))
+        } as ChecklistTask));
 
         return this.checklistModel.insertOne({name, tasks});
     }

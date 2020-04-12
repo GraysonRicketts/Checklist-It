@@ -1,23 +1,23 @@
 export type Template = {
-    id: string,
-    name: string,
-    tasks: TemplateTask[]
+    id: string;
+    name: string;
+    tasks: TemplateTask[];
 }
 
 export type TemplateTask = {
-    id: string,
-    text: string,
-    parentTask?: string
+    id: string;
+    text: string;
+    parentTask?: string;
 }
 
 type TemplateInput = {
-    name: string,
-    tasks: TemplateTaskInput[]
+    name: string;
+    tasks: TemplateTaskInput[];
 }
 
 type TemplateTaskInput = {
-    text: string,
-    parentTask?: string
+    text: string;
+    parentTask?: string;
 }
 
 export default class TemplateModel {
@@ -42,7 +42,7 @@ export default class TemplateModel {
             id: this.getNextId(),
             tasks: tasks.map(t => ({...t, id: this.getNextId()} as TemplateTask)),
             name
-        }
+        };
 
         this.templates.push(template);
 
