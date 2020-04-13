@@ -3,12 +3,11 @@ import session from 'express-session';
 import bodyParser from 'body-parser';
 import graphqlHTTP from 'express-graphql';
 import passport from 'passport';
-import { Strategy, ExtractJwt } from 'passport-jwt';
-import { Strategy as LocalStrategy } from 'passport-local';
+// import { Strategy as JwtStrategy } from 'passport-jwt';
 
 import schema from './schemas';
 import { graphQlRoot } from './api';
-import UserModel, { User } from './models/User';
+// import UserModel, { User } from './models/User';
 
 const ENV = process.env.NODE_ENV;
 
@@ -22,25 +21,25 @@ app.use(session({ secret: process.env.SESSION_SECRET }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-const userModel = new UserModel();
-passport.use(new LocalStrategy(
-    (email, password, done) => {
-        let user: User | void;
-        try{
-            user = userModel.findOne(email);
-        } catch (err) {
-            done(err);
-        }
+// const userModel = new UserModel();
+// passport.use(new JwtStrategy(
+//     (email, password, done) => {
+//         let user: User | void;
+//         try{
+//             user = userModel.findOne(email);
+//         } catch (err) {
+//             done(err);
+//         }
 
-        if (!user) { 
-            return done(null, false); 
-        }
-        if (!user.verifyPassword(password)) { 
-            return done(null, false); 
-        }
-        return done(null, user);
-    }
-  ));
+//         if (!user) { 
+//             return done(null, false); 
+//         }
+//         if (!user.verifyPassword(password)) { 
+//             return done(null, false); 
+//         }
+//         return done(null, user);
+//     }
+//   ));
 
 // Auth routes
 app.post('/login', 

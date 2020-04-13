@@ -1,5 +1,6 @@
 import { Template } from './Template';
 import { Checklist } from './Checklist';
+import crypto from 'crypto';
 
 const nextId = 1;
 function getNextId(): string {
@@ -9,18 +10,24 @@ function getNextId(): string {
 export class User {
     public id: string;
     public email: string;
-    private password: string;
+    private hash: string;
+    private salt: string;
     public templates: Template[];
     public checklists: Checklist[];
 
-    constructor(id: string, email: string, password: string) {
+    constructor(id: string, email: string, hash: string, salt: string) {
+        this.email = email;
+        this.hash = hash;
+        this.salt = salt;
+        
         this.id = getNextId();
         this.templates = [];
         this.checklists = [];
     }
 
     verifyPassword(password: string) {
-        return password === this.password;
+        const hashedPassword = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+        return hashedPassword === this.hash;
     }
 }
 
@@ -43,10 +50,16 @@ export default class UserModel {
 
     insertOne(partialUser: UserInput): User {
         const { email, password } = partialUser;
+
+        // Securely store password
+        const salt = crypto.randomBytes(16).toString('hex');
+        const hashedPassword = crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex');
+
         const user = new User(
             getNextId(),
             email,
-            password
+            hashedPassword,
+            salt
         );
 
         // TODO: make DB call
