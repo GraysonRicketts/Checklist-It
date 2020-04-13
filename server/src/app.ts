@@ -1,25 +1,24 @@
 import express from 'express';
 import session from 'express-session';
 import bodyParser from 'body-parser';
-import graphqlHTTP from 'express-graphql';
 import passport from 'passport';
-// import { Strategy as JwtStrategy } from 'passport-jwt';
-
-import schema from './schemas';
-import { graphQlRoot } from './api';
-// import UserModel, { User } from './models/User';
-
-const ENV = process.env.NODE_ENV;
+import appRouter from './routes';
+import UserModel from './models/User';
 
 const app = express();
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(session({ secret: process.env.SESSION_SECRET }));
 
 // Authentication
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Router
+const userModel = new UserModel();
+app.use('/', appRouter(userModel));
 
 // const userModel = new UserModel();
 // passport.use(new JwtStrategy(
@@ -42,41 +41,19 @@ app.use(passport.session());
 //   ));
 
 // Auth routes
-app.post('/login', 
-    passport.authenticate('local', 
-        {
-            successRedirect: '/',
-            failureRedirect: '/login',
-            failureFlash: 'Invalid username or password.'
-        }
-    )
-);
-app.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
-});
-
-// GraphQL Routes
-app.use('/graphql', graphqlHTTP({
-    schema,
-    rootValue: graphQlRoot,
-    graphiql: true,
-    customFormatErrorFn: error => {
-        console.error(`GraphQL error: ${JSON.stringify({
-            message: error.message,
-            locations: error.locations,
-            stack: error.stack ? error.stack.split('\n') : [],
-            path: error.path,
-        }, null, ENV === 'development' && '\t')}`);
-
-        return error.message;
-    }
-}));
-
-// HTTP Routes
-app.get('/status', (_, res) => {
-    res.status(200).end();
-});
+// app.post('/login', 
+//     passport.authenticate('local', 
+//         {
+//             successRedirect: '/',
+//             failureRedirect: '/login',
+//             failureFlash: 'Invalid username or password.'
+//         }
+//     )
+// );
+// app.get('/logout', (req, res) => {
+//     req.logout();
+//     res.redirect('/');
+// });
 
 
 

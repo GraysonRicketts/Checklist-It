@@ -2,9 +2,9 @@ import { Template } from './Template';
 import { Checklist } from './Checklist';
 import crypto from 'crypto';
 
-const nextId = 1;
+let nextId = 1;
 function getNextId(): string {
-    return (this.nextId++).toString();
+    return (nextId++).toString();
 }
 
 export class User {
@@ -31,7 +31,7 @@ export class User {
     }
 }
 
-type UserInput = {
+export type UserInput = {
     email: string;
     password: string;
 }
@@ -63,6 +63,7 @@ export default class UserModel {
         );
 
         // TODO: make DB call
+        // TODO: throw error if user already exists
         this.users.push(user);
 
         return user;
