@@ -25,7 +25,7 @@ export class User {
         this.checklists = [];
     }
 
-    verifyPassword(password: string) {
+    isValidPassword(password: string): boolean {
         const hashedPassword = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
         return hashedPassword === this.hash;
     }
@@ -43,12 +43,12 @@ export default class UserModel {
         this.users = [];
     }
 
-    findOne(email: string): User | void {
+    findByEmail(email: string): User | void {
         // TOOD: make DB call
         return this.users.find(u => u.email === email);
     }
 
-    insertOne(partialUser: UserInput): User {
+    create(partialUser: UserInput): User {
         const { email, password } = partialUser;
 
         // Securely store password

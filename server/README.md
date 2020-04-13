@@ -3,7 +3,7 @@
 - [x] add user model
 - [ ] add auth
     - [x] encrypt password
-    - [ ] create user
+    - [x] create user
     - [ ] JWT token authentication
 - [ ] checkout using Morgan for logging
 - [ ] setup DB
