@@ -1,11 +1,27 @@
-import { Template } from "./Template";
-import { Checklist } from "./Checklist";
+import { Template } from './Template';
+import { Checklist } from './Checklist';
 
-export type User = {
-    email: string,
-    password: string,
-    templates: Template[],
-    checklists: Checklist[]
+const nextId = 1;
+function getNextId(): string {
+    return (this.nextId++).toString();
+}
+
+export class User {
+    public id: string;
+    public email: string;
+    private password: string;
+    public templates: Template[];
+    public checklists: Checklist[];
+
+    constructor(id: string, email: string, password: string) {
+        this.id = getNextId();
+        this.templates = [];
+        this.checklists = [];
+    }
+
+    verifyPassword(password: string) {
+        return password === this.password;
+    }
 }
 
 type UserInput = {
@@ -15,11 +31,9 @@ type UserInput = {
 
 export default class UserModel {
     private users: User[];
-    private nextId: number;
 
     constructor() {
         this.users = [];
-        this.nextId = 1;
     }
 
     findOne(email: string): User | void {
@@ -27,18 +41,13 @@ export default class UserModel {
         return this.users.find(u => u.email === email);
     }
 
-    getNextId(): string {
-        return (this.nextId++).toString();
-    }
-
     insertOne(partialUser: UserInput): User {
         const { email, password } = partialUser;
-        const user: User = {
+        const user = new User(
+            getNextId(),
             email,
-            password,
-            templates: [],
-            checklists: []
-        }
+            password
+        );
 
         // TODO: make DB call
         this.users.push(user);

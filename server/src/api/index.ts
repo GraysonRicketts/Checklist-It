@@ -15,7 +15,7 @@ export const graphQlRoot = {
     // Mutations
     addTemplate: (args: any) => { 
         console.log(`args: ${JSON.stringify(args)}`);
-        templateService.add(args.name, args.tasks)
+        templateService.add(args.name, args.tasks);
     },
     addChecklist: (args: any) => checklistService.add(args.name, args.templateId)
 };

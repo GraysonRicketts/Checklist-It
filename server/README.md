@@ -3,3 +3,17 @@
 - [x] add user model
 - [ ] add auth endpoints (i.e. login, logout)
 - [ ] add auth
+- [ ] checkout using Morgan for logging
+- [ ] setup DB
+- [ ] complete tasks in checklist
+- [ ] setup recreatable environment (e.g. virtualenv for JS)
+- [ ] dockerize
+- [ ] deploy
+    - [ ] domain
+    - [ ] hosting service
+    - [ ] CI/CD pipeline
+- [ ] change template name
+- [ ] change checklist name
+- [ ] modify template
+- [ ] delete checklist
+- [ ] google authentication
