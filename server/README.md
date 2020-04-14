@@ -5,11 +5,10 @@
     - [x] encrypt password
     - [x] create user
     - [x] JWT token authentication
-- [ ] secure routes
-    - [ ] access control to schemas
-        - [ ] owner
-        - [ ] shared with
-    - [ ] add JWT infront of route
+- [x] secure routes
+    - [x] update schema
+    - [x] add JWT infront of route
+    - [x] add authorization
 - [ ] checkout using Morgan for logging
 - [ ] setup DB
 - [ ] add endpoint to complete tasks in checklist

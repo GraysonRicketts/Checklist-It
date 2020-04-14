@@ -39,6 +39,8 @@ export function login(req: Request, res: Response, next: NextFunction, passport:
                     
                     // Send back the token to the user
                     return res.status(200).json({ 
+                        id,
+                        email,
                         token,
                         templates,
                         checklists

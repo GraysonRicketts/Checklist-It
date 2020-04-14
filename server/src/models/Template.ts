@@ -2,6 +2,7 @@ export type Template = {
     id: string;
     name: string;
     tasks: TemplateTask[];
+    owners: string[];
 }
 
 export type TemplateTask = {
@@ -37,11 +38,12 @@ export default class TemplateModel {
         return (this.nextId++).toString();
     }
 
-    insertOne(partialTemplate: TemplateInput): Template {
+    insertOne(partialTemplate: TemplateInput, ownerId: string): Template {
         const { name, tasks } = partialTemplate;
         const template: Template = {
             id: this.getNextId(),
             tasks: tasks.map(t => ({...t, id: this.getNextId()} as TemplateTask)),
+            owners: [ownerId],
             name
         };
 

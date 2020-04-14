@@ -7,11 +7,17 @@ export default class TemplateService {
         this.templateModel = templateModel;
     }
 
-    public get(id: string): Template | void {
-        return this.templateModel.findOne(id);
+    public get(id: string, user: any): Template | void {
+        const template = this.templateModel.findOne(id);
+
+        if (!template || !template.owners.includes(user)) {
+            return null;
+        }
+
+        return template;
     }
     
-    public add(name: string, tasks: TemplateTask[]): Template {
-        return this.templateModel.insertOne({name, tasks});
+    public add(name: string, tasks: TemplateTask[], userId: any): Template {
+        return this.templateModel.insertOne({name, tasks}, userId);
     }
 }

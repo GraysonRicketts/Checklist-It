@@ -12,15 +12,17 @@ export default function appRouter(passport: PassportStatic): Router {
         const token = generateJwt(user.id, user.email);
 
         return res.status(201).json({
-            token,
+            id: user.id,
+            email: user.email,
             templates: user.templates,
-            checklists: user.checklists
+            checklists: user.checklists,
+            token
         });
     });
 
     router.post('/login', (req, res, next) => login(req, res, next, passport));
     
-    router.use('/graphql', graphqlRouter);
+    router.use('/graphql', passport.authenticate('jwt', { session: false }), graphqlRouter);
     
     // Healthcheck
     router.get('/status', (_, res) => {

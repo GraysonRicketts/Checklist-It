@@ -10,7 +10,7 @@ function createJwtStrategy(userModel: UserModel): JwtStrategy {
   };
 
   return new JwtStrategy(opts, (payload, done) => {
-      const { email  } = payload;
+      const { email } = payload;
 
       const user = userModel.findByEmail(email);
       if (!user) {

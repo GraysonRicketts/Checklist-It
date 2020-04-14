@@ -2,6 +2,7 @@ export type Checklist = {
     id: string;
     name: string;
     tasks: ChecklistTask[];
+    owners: string[];
 }
 
 export type ChecklistTask = {
@@ -38,11 +39,12 @@ export default class ChecklistModel {
         return (this.nextId++).toString();
     }
 
-    insertOne(partialChecklist: ChecklistInput): Checklist {
+    insertOne(partialChecklist: ChecklistInput, ownerId: string): Checklist {
         const { name, tasks } = partialChecklist;
         const checklist: Checklist = {
             id: this.getNextId(),
             tasks: tasks.map(t => ({...t, id: this.getNextId()} as ChecklistTask)),
+            owners: [ownerId],
             name
         };
 

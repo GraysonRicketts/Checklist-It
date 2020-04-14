@@ -9,11 +9,17 @@ export default class ChecklistService {
         this.checklistModel = checklistModel;
     }
 
-    public get(id: string): Checklist | void {
-        return this.checklistModel.findOne(id);
+    public get(id: string, userId: string): Checklist | void {
+        const checklist = this.checklistModel.findOne(id);
+
+        if (!checklist || !checklist.owners.includes(userId)) {
+            return null;
+        }
+
+        return checklist;
     }
     
-    public add(name: string, templateId: string): Checklist {
+    public add(name: string, templateId: string, userId: string): Checklist {
         // Create checklist from template
         const template = this.templateModel.findOne(templateId);
         if (!template) {
@@ -26,6 +32,6 @@ export default class ChecklistService {
             completed: false
         } as ChecklistTask));
 
-        return this.checklistModel.insertOne({name, tasks});
+        return this.checklistModel.insertOne({name, tasks}, userId);
     }
 }
