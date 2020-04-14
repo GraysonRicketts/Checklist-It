@@ -1,7 +1,25 @@
-import { PassportStatic } from "passport";
-import { Strategy as JwtStrategy , ExtractJwt} from "passport-jwt";
+import { PassportStatic } from 'passport';
+import { Strategy as JwtStrategy , ExtractJwt} from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
-import UserModel from "../models/User";
+import UserModel from '../models/User';
+
+function createJwtStrategy(userModel: UserModel): JwtStrategy {
+  const opts = {
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: process.env.JWT_SECRET
+  };
+
+  return new JwtStrategy(opts, (payload, done) => {
+      const { email  } = payload;
+
+      const user = userModel.findByEmail(email);
+      if (!user) {
+          return done(false);
+      }
+
+      return done(null, user);
+  });
+}
 
 export function configurePassport(passport: PassportStatic, userModel: UserModel): void {
     passport.use('signup', new LocalStrategy({
@@ -11,10 +29,10 @@ export function configurePassport(passport: PassportStatic, userModel: UserModel
         try {
             const user = userModel.create({ email, password });
             return done(null, user);
-        } catch (error) {
+        } catch (error) { 
             done(error);
         }
-    }))
+    }));
 
     passport.use('login', new LocalStrategy({
         usernameField : 'email',
@@ -41,20 +59,3 @@ export function configurePassport(passport: PassportStatic, userModel: UserModel
     passport.use(createJwtStrategy(userModel));
 }
 
-function createJwtStrategy(userModel: UserModel): JwtStrategy {
-    const opts = {
-        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-        secretOrKey: process.env.JWT_SECRET
-    };
-
-    return new JwtStrategy(opts, (payload, done) => {
-        const { email  } = payload;
-
-        const user = userModel.findByEmail(email);
-        if (!user) {
-            return done(false);
-        }
-
-        return done(null, user);
-    });
-}

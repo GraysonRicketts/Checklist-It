@@ -1,49 +1,24 @@
 import { Router } from 'express';
 import graphqlRouter from './graphql';
 import { PassportStatic } from 'passport';
-import jwt from 'jsonwebtoken';
+import { login, generateJwt } from '../config/auth';
+import { User } from '../models/User';
 
 export default function appRouter(passport: PassportStatic): Router {
     const router = Router();
 
-    router.post('/signup', passport.authenticate('signup'), (req, res) => {
+    router.post('/signup', passport.authenticate('signup', { session: false }), (req, res) => {
+        const user = req.user as User;
+        const token = generateJwt(user.id, user.email);
+
         return res.status(201).json({
-            message: 'Signup successful',
-            user: req.user
+            token,
+            templates: user.templates,
+            checklists: user.checklists
         });
     });
 
-    router.post('/login', (req, res, next) => {
-        passport.authenticate('login', async (err, user) => {    
-            if (err || !user) {
-                const error = new Error('An Error occurred');
-                return next(error);
-            }
-
-            try {
-                await req.login(user, { session : false }, (error) => {
-                    if( error ) {
-                        return next(error);
-                    }
-                    
-                    // We don't want to store the sensitive information such as the
-                    // user password in the token so we pick only the email and id
-                    const body = { 
-                        id : user.id, 
-                        email : user.email
-                    };
-                    
-                    // Sign the JWT token and populate the payload with the user email and id
-                    const token = jwt.sign({ user : body }, process.env.JWT_SECRET);
-                    
-                    // Send back the token to the user
-                    return res.status(200).json({ token });
-                });     
-            } catch (error) {
-                return next(error);
-            }
-        })(req, res, next);
-    })
+    router.post('/login', (req, res, next) => login(req, res, next, passport));
     
     router.use('/graphql', graphqlRouter);
     
@@ -52,5 +27,5 @@ export default function appRouter(passport: PassportStatic): Router {
         res.status(200).end();
     });
 
-    return router
+    return router;
 }

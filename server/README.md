@@ -4,10 +4,15 @@
 - [ ] add auth
     - [x] encrypt password
     - [x] create user
-    - [ ] JWT token authentication
+    - [x] JWT token authentication
+- [ ] secure routes
+    - [ ] access control to schemas
+        - [ ] owner
+        - [ ] shared with
+    - [ ] add JWT infront of route
 - [ ] checkout using Morgan for logging
 - [ ] setup DB
-- [ ] complete tasks in checklist
+- [ ] add endpoint to complete tasks in checklist
 - [ ] setup recreatable environment (e.g. virtualenv for JS)
 - [ ] dockerize
 - [ ] deploy
