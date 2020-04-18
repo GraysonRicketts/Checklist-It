@@ -1,20 +1,16 @@
-import ChecklistModel, { Checklist, ChecklistTask } from '../../models/Checklist';
-import TemplateModel from '../../models/Template';
+import ChecklistRepository, { Checklist, ChecklistTask } from '../../models/Checklist';
+import TemplateRepository from '../../models/Template';
 
 export default class ChecklistService {
-    private templateModel: TemplateModel;
-    private checklistModel: ChecklistModel;
-    constructor(checklistModel: ChecklistModel, templateModel: TemplateModel) {
+    private templateModel: TemplateRepository;
+    private checklistModel: ChecklistRepository;
+    constructor(checklistModel: ChecklistRepository, templateModel: TemplateRepository) {
         this.templateModel = templateModel;
         this.checklistModel = checklistModel;
     }
 
     public get(id: string, userId: string): Checklist | void {
         const checklist = this.checklistModel.findOne(id);
-
-        if (!checklist || !checklist.owners.includes(userId)) {
-            return null;
-        }
 
         return checklist;
     }

@@ -21,7 +21,7 @@ type TemplateTaskInput = {
     parentTask?: string;
 }
 
-export default class TemplateModel {
+export default class TemplateRepository {
     private nextId: number;
     private templates: Template[];
     constructor() {

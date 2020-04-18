@@ -21,7 +21,7 @@ type ChecklistTaskInput = {
     parentTask?: string;
 }
 
-export default class ChecklistModel {
+export default class ChecklistRepository {
     private nextId: number;
     private checklists: Checklist[];
     constructor() {

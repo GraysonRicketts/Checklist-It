@@ -5,13 +5,13 @@ import schema from '../schemas';
 
 import TemplateService from '../services/templates';
 import ChecklistService from '../services/checklists';
-import TemplateModel from '../models/Template';
-import ChecklistModel from '../models/Checklist';
+import TemplateRepository from '../models/Template';
+import ChecklistRepository from '../models/Checklist';
 import { User } from '../models/User';
 
-const templateModel = new TemplateModel();
+const templateModel = new TemplateRepository();
 const templateService = new TemplateService(templateModel);
-const checklistService = new ChecklistService(new ChecklistModel(), templateModel);
+const checklistService = new ChecklistService(new ChecklistRepository(), templateModel);
 
 const root = {
     // Queries

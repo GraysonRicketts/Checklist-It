@@ -1,11 +1,8 @@
 import { Template } from './Template';
 import { Checklist } from './Checklist';
 import crypto from 'crypto';
-
-let nextId = 1;
-function getNextId(): string {
-    return (nextId++).toString();
-}
+import { Pool } from 'pg';
+import DB from '../config/database';
 
 export class User {
     public id: string;
@@ -16,11 +13,11 @@ export class User {
     public checklists: Checklist[];
 
     constructor(id: string, email: string, hash: string, salt: string) {
+        this.id = id;
         this.email = email;
         this.hash = hash;
         this.salt = salt;
         
-        this.id = getNextId();
         this.templates = [];
         this.checklists = [];
     }
@@ -36,36 +33,27 @@ export type UserInput = {
     password: string;
 }
 
-export default class UserModel {
-    private users: User[];
+export default class UserRepository {
+    private db: DB;
 
-    constructor() {
-        this.users = [];
+    constructor(db: DB) {
+        this.db = db;
     }
 
     findByEmail(email: string): User | void {
         // TOOD: make DB call
-        return this.users.find(u => u.email === email);
+        // return this.users.find(u => u.email === email);
     }
 
-    create(partialUser: UserInput): User {
+    async create(partialUser: UserInput): Promise<User> {
         const { email, password } = partialUser;
 
         // Securely store password
         const salt = crypto.randomBytes(16).toString('hex');
         const hashedPassword = crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex');
 
-        const user = new User(
-            getNextId(),
-            email,
-            hashedPassword,
-            salt
-        );
+        const { id } = await this.db.query(`INSERT INTO users (email, hash, salt) VALUES (${email}, ${hashedPassword}, ${salt};`);
 
-        // TODO: make DB call
-        // TODO: throw error if user already exists
-        this.users.push(user);
-
-        return user;
+        return new User(id, email, hashedPassword, salt);
     }
 }

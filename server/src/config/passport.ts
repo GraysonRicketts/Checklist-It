@@ -1,9 +1,9 @@
 import { PassportStatic } from 'passport';
 import { Strategy as JwtStrategy , ExtractJwt} from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
-import UserModel from '../models/User';
+import UserRepository from '../models/User';
 
-function createJwtStrategy(userModel: UserModel): JwtStrategy {
+function createJwtStrategy(userModel: UserRepository): JwtStrategy {
   const opts = {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: process.env.JWT_SECRET
@@ -21,7 +21,7 @@ function createJwtStrategy(userModel: UserModel): JwtStrategy {
   });
 }
 
-export function configurePassport(passport: PassportStatic, userModel: UserModel): void {
+export function configurePassport(passport: PassportStatic, userModel: UserRepository): void {
     passport.use('signup', new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password'

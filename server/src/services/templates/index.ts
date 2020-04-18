@@ -1,9 +1,9 @@
 import { Template, TemplateTask } from '../../models/Template';
-import TemplateModel from '../../models/Template';
+import TemplateRepository from '../../models/Template';
 
 export default class TemplateService {
-    private templateModel: TemplateModel;
-    constructor(templateModel: TemplateModel) {
+    private templateModel: TemplateRepository;
+    constructor(templateModel: TemplateRepository) {
         this.templateModel = templateModel;
     }
 

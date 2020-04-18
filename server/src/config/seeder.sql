@@ -11,7 +11,8 @@ DROP TABLE IF EXISTS user_template;
 CREATE TABLE users (
     id uuid DEFAULT uuid_generate_v4(),
     email VARCHAR (355) UNIQUE NOT NULL,
-    password VARCHAR NOT NULL,
+    hash VARCHAR NOT NULL,
+    salt VARCHAR NOT NULL,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'utc'),
     PRIMARY KEY (id)
 );
