@@ -2,7 +2,6 @@ export type Checklist = {
     id: string;
     name: string;
     tasks: ChecklistTask[];
-    owners: string[];
 }
 
 export type ChecklistTask = {
@@ -44,7 +43,6 @@ export default class ChecklistModel {
         const checklist: Checklist = {
             id: this.getNextId(),
             tasks: tasks.map(t => ({...t, id: this.getNextId()} as ChecklistTask)),
-            owners: [ownerId],
             name
         };
 

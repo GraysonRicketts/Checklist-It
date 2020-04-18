@@ -11,6 +11,10 @@
     - [x] add authorization
 - [ ] checkout using Morgan for logging
 - [ ] setup DB
+    - [x] get postgres on computer
+    - [x] create seeder / setup file
+    - [ ] connect app to db
+    - [ ] persistent store model info in db
 - [ ] add endpoint to complete tasks in checklist
 - [ ] setup recreatable environment (e.g. virtualenv for JS)
 - [ ] dockerize
@@ -18,6 +22,10 @@
     - [ ] domain
     - [ ] hosting service
     - [ ] CI/CD pipeline
+- [ ] README update
+    - [ ] install
+    - [ ] setup
+    - [ ] blurb
 - [ ] change template name
 - [ ] change checklist name
 - [ ] modify template
