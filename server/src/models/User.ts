@@ -12,14 +12,13 @@ export class User {
     public templates: Template[];
     public checklists: Checklist[];
 
-    constructor(id: string, email: string, hash: string, salt: string) {
+    constructor(id: string, email: string, hash: string, salt: string, templates: Template[] = [], checklists: Checklist[] = []) {
         this.id = id;
         this.email = email;
         this.hash = hash;
         this.salt = salt;
-        
-        this.templates = [];
-        this.checklists = [];
+        this.templates = templates;
+        this.checklists = checklists;
     }
 
     isValidPassword(password: string): boolean {
@@ -40,19 +39,33 @@ export default class UserRepository {
         this.db = db;
     }
 
-    findByEmail(email: string): User | void {
-        // TOOD: make DB call
-        // return this.users.find(u => u.email === email);
+    async findByEmail(email: string): Promise<User | void> {
+        // TODO: pull in checklists and templates at the same time
+        const res = await this.db.query(`
+            SELECT id, hash, salt 
+            FROM users
+            WHERE email=$1;`
+            , [email]
+        );
+        
+        if (!res.rows.length) {
+            return null;
+        }
+
+        const {id, hash, salt} = res.rows[0];
+
+        return new User(id, email, hash, salt);
     }
 
-    async create(partialUser: UserInput): Promise<User> {
+    async insert(partialUser: UserInput): Promise<User> {
         const { email, password } = partialUser;
 
         // Securely store password
         const salt = crypto.randomBytes(16).toString('hex');
         const hashedPassword = crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex');
 
-        const { id } = await this.db.query(`INSERT INTO users (email, hash, salt) VALUES (${email}, ${hashedPassword}, ${salt};`);
+        const res = await this.db.query(`INSERT INTO users (email, hash, salt) VALUES ($1, $2, $3) RETURNING id;`, [email, hashedPassword, salt]);
+        const { id } = res.rows[0];
 
         return new User(id, email, hashedPassword, salt);
     }

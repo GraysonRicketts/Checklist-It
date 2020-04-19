@@ -13,8 +13,13 @@
 - [ ] setup DB
     - [x] get postgres on computer
     - [x] create seeder / setup file
-    - [ ] connect app to db
-    - [ ] persistent store model info in db
+    - [x] connect app to db
+    - [ ] persistent store for signup / login
+    - [ ] persistent store template
+    - [ ] persistent store for checklist
+    - [ ] persistent store user model info in db
+        - [ ] get templates when get user
+        - [ ] get checklists when get user 
 - [ ] add endpoint to complete tasks in checklist
 - [ ] setup recreatable environment (e.g. virtualenv for JS)
 - [ ] dockerize
@@ -31,3 +36,10 @@
 - [ ] modify template
 - [ ] delete checklist
 - [ ] google authentication
+
+## Setup
+
+Run command to seed DB
+```(bash)
+psql -U sde -h localhost -d checklist-it -f src/config/seeder.sql
+```

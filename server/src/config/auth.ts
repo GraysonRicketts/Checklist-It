@@ -15,7 +15,31 @@ export function generateJwt(id: string, email: string) {
     }, process.env.JWT_SECRET);
 }
 
+export function signup(req: Request, res: Response, next: NextFunction, passport: PassportStatic) {
+    passport.authenticate('signup', 
+        { failureFlash: 'Unable to create user' }, 
+        async (err, user: User) => {
+            if (err || !user) {
+                const error = new Error('An Error occurred');
+                return next(error);
+            }
 
+            try {
+                // TODO: don't return JWT if error
+                const token = generateJwt(user.id, user.email);
+
+                return res.status(201).json({
+                    id: user.id,
+                    email: user.email,
+                    templates: user.templates,
+                    checklists: user.checklists,
+                    token
+                });
+            } catch (error) {
+                return next(error);
+            }
+    })(req, res, next);
+}
 
 export function login(req: Request, res: Response, next: NextFunction, passport: PassportStatic) {
     passport.authenticate('login', 

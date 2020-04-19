@@ -25,9 +25,9 @@ export function configurePassport(passport: PassportStatic, userModel: UserRepos
     passport.use('signup', new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password'
-    }, (email, password, done) => {
+    }, async (email, password, done) => {
         try {
-            const user = userModel.create({ email, password });
+            const user = await userModel.insert({ email, password });
             return done(null, user);
         } catch (error) { 
             done(error);
@@ -39,7 +39,7 @@ export function configurePassport(passport: PassportStatic, userModel: UserRepos
         passwordField : 'password'
       }, async (email, password, done) => {
         try {
-          const user = userModel.findByEmail(email);
+          const user = await userModel.findByEmail(email);
           if( !user ){
             return done(null, false);
           }
