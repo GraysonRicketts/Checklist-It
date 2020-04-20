@@ -15,9 +15,9 @@ export default class ChecklistService {
         return checklist;
     }
     
-    public add(name: string, templateId: string, userId: string): Checklist {
+    public async add(name: string, templateId: string, userId: string): Promise<Checklist> {
         // Create checklist from template
-        const template = this.templateModel.findOne(templateId);
+        const template = await this.templateModel.findOne(templateId);
         if (!template) {
             console.error(`Could not find template id ${templateId} in order to create checklist`);
             throw new Error('Unable to create checklist');

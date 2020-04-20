@@ -9,10 +9,10 @@ function createJwtStrategy(userModel: UserRepository): JwtStrategy {
       secretOrKey: process.env.JWT_SECRET
   };
 
-  return new JwtStrategy(opts, (payload, done) => {
+  return new JwtStrategy(opts, async (payload, done) => {
       const { email } = payload;
 
-      const user = userModel.findByEmail(email);
+      const user = await userModel.findByEmail(email);
       if (!user) {
           return done(false);
       }

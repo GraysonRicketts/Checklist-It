@@ -3,31 +3,40 @@ import { Request } from 'express';
 
 import schema from '../schemas';
 
-import TemplateService from '../services/templates';
+import TemplateService from '../services/templates/Template.service';
 import ChecklistService from '../services/checklists';
 import TemplateRepository from '../models/Template';
 import ChecklistRepository from '../models/Checklist';
 import { User } from '../models/User';
+import DB from '../config/database';
+import TemplateTaskService from '../services/templates/TemplateTask.service';
+import TemplateTaskRepository from '../models/TemplateTask';
 
-const templateModel = new TemplateRepository();
-const templateService = new TemplateService(templateModel);
-const checklistService = new ChecklistService(new ChecklistRepository(), templateModel);
 
-const root = {
-    // Queries
-    template:  (args: any, context: any) => templateService.get(args.id, context.userId),
-    checklist: (args: any, context: any) => checklistService.get(args.id, context.userId),
 
-    // Mutations
-    addTemplate: (args: any, context: any) => {
-        templateService.add(args.name, args.tasks, context.userId);
-    },
-    addChecklist: (args: any, context: any) => checklistService.add(args.name, args.templateId, context.userId)
+const root = (db: DB) => {
+    const templateRepo = new TemplateRepository(db);
+    const templateTaskRepo = new TemplateTaskRepository(db);
+
+    const templateService = new TemplateService(templateRepo);
+    const templateTaskService = new TemplateTaskService(templateTaskRepo, templateService);
+    const checklistService = new ChecklistService(new ChecklistRepository(), templateRepo);
+    
+    return {
+        // Queries
+        template:  async (args: any, context: any) => await templateService.get(args.id, context.userId),
+        checklist: (args: any, context: any) => checklistService.get(args.id, context.userId),
+
+        // Mutations
+        addTemplate: async (args: any, context: any) => await templateService.add(args.name, context.userId),
+        addTemplateTask: async(args: any, context: any) => await templateTaskService.add(args.templateId, args.text, args.parentTaskId, context.userId),
+        addChecklist: (args: any, context: any) => checklistService.add(args.name, args.templateId, context.userId)
+    }
 };
 
-export default graphqlHTTP((req: Request) => ({
+export default (db: DB) => graphqlHTTP((req: Request) => ({
     schema,
-    rootValue: root,
+    rootValue: root(db),
     graphiql: true,
     context: { userId: (req.user as User).id },
     customFormatErrorFn: error => {

@@ -41,12 +41,13 @@ export default class UserRepository {
 
     async findByEmail(email: string): Promise<User | void> {
         // TODO: pull in checklists and templates at the same time
-        const res = await this.db.query(`
+        const res = await this.db.query({
+            query: `
             SELECT id, hash, salt 
             FROM users
-            WHERE email=$1;`
-            , [email]
-        );
+            WHERE email=$1;`,
+            values: [email]
+        });
         
         if (!res.rows.length) {
             return null;
@@ -64,7 +65,10 @@ export default class UserRepository {
         const salt = crypto.randomBytes(16).toString('hex');
         const hashedPassword = crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex');
 
-        const res = await this.db.query(`INSERT INTO users (email, hash, salt) VALUES ($1, $2, $3) RETURNING id;`, [email, hashedPassword, salt]);
+        const res = await this.db.query({
+            query: `INSERT INTO users (email, hash, salt) VALUES ($1, $2, $3) RETURNING id;`, 
+            values: [email, hashedPassword, salt]
+        });
         const { id } = res.rows[0];
 
         return new User(id, email, hashedPassword, salt);

@@ -1,3 +1,8 @@
+import DB, { QueryRequest } from "../config/database";
+import { QueryResult } from "pg";
+
+import { TemplateTask } from '../models/TemplateTask';
+
 export type Template = {
     id: string;
     name: string;
@@ -5,50 +10,76 @@ export type Template = {
     owners: string[];
 }
 
-export type TemplateTask = {
-    id: string;
-    text: string;
-    parentTask?: string;
-}
-
 type TemplateInput = {
     name: string;
-    tasks: TemplateTaskInput[];
-}
-
-type TemplateTaskInput = {
-    text: string;
-    parentTask?: string;
 }
 
 export default class TemplateRepository {
-    private nextId: number;
-    private templates: Template[];
-    constructor() {
-        this.templates = [];
-        this.nextId = 1;
+    private db: DB;
+    constructor(db: DB) {
+        this.db = db;
     }
 
-    findOne(id: string): Template | void {
-        // TODO: make DB call
-        return this.templates.find(t => t.id === id);
+    public async findOne(id: string): Promise<Template | void> {
+        const res = await this.db.transaction([
+            {
+                query: 'SELECT id, name FROM templates WHERE id=$1',
+                values: [id]
+            },
+            {
+                query: 'SELECT id, text, parent_task as parentTask FROM template_task WHERE template_id=$1',
+                values: [id]
+            },
+            {
+                query: 'SELECT user_id FROM user_template WHERE template_id=$1',
+                values: [id]
+            }
+        ]);
+
+        if (!res[0].rows.length) {
+            throw Error('Template not found');
+        }
+
+        return {
+            id,
+            name: res[0].rows[0].name,
+            tasks: res[1].rows.map(row => ({
+                id: row.id,
+                text: row.text,
+                parentTask: row.parentTask
+            })),
+            owners: res[2].rows.map(row => row.user_id)
+        } as Template;
     }
 
-    getNextId(): string {
-        return (this.nextId++).toString();
-    }
+    public async insertOne(partialTemplate: TemplateInput, ownerId: string): Promise<Template> {
+        const { name } = partialTemplate;
 
-    insertOne(partialTemplate: TemplateInput, ownerId: string): Template {
-        const { name, tasks } = partialTemplate;
+        const requests: QueryRequest[] = [
+            {
+                query: 'INSERT INTO templates (name) VALUES ($1) RETURNING id',
+                values: [name],
+                callback: (res: QueryResult) => {
+                    const templateId = res.rows[0].id;
+
+                    return [
+                        {
+                            query: 'INSERT INTO user_template (user_id, template_id) VALUES ($1, $2)',
+                            values: [ownerId, templateId]
+                        } as QueryRequest
+                    ];
+                }
+            } as QueryRequest,
+        ];
+
+        const res = await this.db.transaction(requests);
+        const { id } = res[0].rows[0];
         const template: Template = {
-            id: this.getNextId(),
-            tasks: tasks.map(t => ({...t, id: this.getNextId()} as TemplateTask)),
+            id,
+            tasks: [],
             owners: [ownerId],
             name
         };
-
-        // TODO: make DB call
-        this.templates.push(template);
 
         return template;
     }

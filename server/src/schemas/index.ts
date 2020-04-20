@@ -4,7 +4,8 @@ const schema = buildSchema(`
 type Template {
     id: ID!,
     name: String!,
-    tasks: [TemplateTask]!
+    tasks: [TemplateTask]!,
+    owners: [String]!
 }
 
 type TemplateTask {
@@ -16,7 +17,7 @@ type TemplateTask {
 type Checklist {
     id: ID!,
     name: String!
-    tasks: [ChecklistTask]!,
+    tasks: [ChecklistTask]
 }
 
 type ChecklistTask {
@@ -37,7 +38,8 @@ type Query {
 }
 
 type Mutation {
-    addTemplate(name: String!, tasks: [TaskInput]!): Template
+    addTemplate(name: String!): Template
+    addTemplateTask(templateId: ID!, text: String!, parentTask: ID): TemplateTask
     addChecklist(name: String!, templateId: ID!): Checklist
 }
 `);

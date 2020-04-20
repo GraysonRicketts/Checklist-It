@@ -30,6 +30,6 @@ app.use(passport.initialize());
 configureAuthentication(passport, userRepo);
 
 // Router
-app.use('/', appRouter(passport));
+app.use('/', appRouter(passport, db));
 
 export default app;
