@@ -42,5 +42,5 @@
 
 Run command to seed DB
 ```(bash)
-psql -U sde -h localhost -d checklist-it -f src/config/seeder.sql
+psql -U sde -h localhost -d checklist-it -f ./src/config/seeder.sql
 ```

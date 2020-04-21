@@ -2,7 +2,7 @@ import { Pool, QueryResult } from 'pg';
 
 export type QueryRequest = {
     query: string,
-    values: string[],
+    values: (string | number | boolean)[],
     callback?: (res: QueryResult) => QueryRequest[]
 }
 

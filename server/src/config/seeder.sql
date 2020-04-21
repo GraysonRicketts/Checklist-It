@@ -28,6 +28,7 @@ CREATE TABLE templates (
 CREATE TABLE checklists (
     id uuid DEFAULT uuid_generate_v4(),
     name VARCHAR (355) NOT NULL,
+    owner_id uuid REFERENCES users (id),
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'utc'),
     PRIMARY KEY (id)
 );
@@ -46,8 +47,8 @@ CREATE TABLE template_task (
     id uuid DEFAULT uuid_generate_v4(),
     text VARCHAR (355) NOT NULL,
     parent_task uuid,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'utc'),
     template_id uuid REFERENCES templates (id),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'utc'),
     PRIMARY KEY (id)
 );
 

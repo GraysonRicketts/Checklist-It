@@ -8,27 +8,18 @@ export default class TemplateTaskService {
         this.repo = repo;
         this.templateService = templateService;
     }
-
-    public get(id: string): TemplateTask | void {
-        // const template = this.templateModel.findOne(id);
-
-        // if (!template || !template.owners.includes(user)) {
-        //     return null;
-        // }
-
-        // return template;
-    }
     
     public async add(templateId: string, text: string, parentTaskId: string, userId: string): Promise<TemplateTask> {
-        if (!this.hasAccess(userId, templateId)) {
-            throw Error('Invalid template id');
+        const template = await this.templateService.get(templateId);
+        if (!template) {
+            throw Error('Need template to create task');
+        }
+
+        if (!template.doesUserHaveAccess(userId)) {
+            console.error('User tried to add to template they do not own');
+            return null;
         }
 
         return await this.repo.insertOne(templateId, text, parentTaskId);
-    }
-
-    private async hasAccess(userId: string, templateId: string) {
-        const template = await this.templateService.get(templateId, userId);
-        return !!template;
     }
 }

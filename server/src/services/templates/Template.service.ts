@@ -7,14 +7,9 @@ export default class TemplateService {
         this.templateModel = templateModel;
     }
 
-    public async get(id: string, userId: string): Promise<Template | void> {
+    public async get(id: string): Promise<Template | void> {
         const template =  await this.templateModel.findOne(id);
-        
-        if (!template || !template.owners.includes(userId)) {
-            return null;
-        }
 
-        console.log(`template: ${JSON.stringify(template)}`)
         return template;
     }
     

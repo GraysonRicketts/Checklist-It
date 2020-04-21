@@ -20,12 +20,12 @@ const root = (db: DB) => {
 
     const templateService = new TemplateService(templateRepo);
     const templateTaskService = new TemplateTaskService(templateTaskRepo, templateService);
-    const checklistService = new ChecklistService(new ChecklistRepository(), templateRepo);
+    const checklistService = new ChecklistService(new ChecklistRepository(db), templateRepo);
     
     return {
         // Queries
-        template:  async (args: any, context: any) => await templateService.get(args.id, context.userId),
-        checklist: (args: any, context: any) => checklistService.get(args.id, context.userId),
+        template:  async (args: any) => await templateService.get(args.id),
+        checklist: (args: any) => checklistService.get(args.id),
 
         // Mutations
         addTemplate: async (args: any, context: any) => await templateService.add(args.name, context.userId),

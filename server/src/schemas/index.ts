@@ -2,33 +2,34 @@ import { buildSchema } from 'graphql';
 
 const schema = buildSchema(`
 type Template {
-    id: ID!,
-    name: String!,
-    tasks: [TemplateTask]!,
+    id: ID!
+    name: String!
+    tasks: [TemplateTask]!
     owners: [String]!
 }
 
 type TemplateTask {
-    id: ID!,
-    text: String!,
+    id: ID!
+    text: String!
     parentTask: ID
 }
 
 type Checklist {
-    id: ID!,
+    id: ID!
     name: String!
-    tasks: [ChecklistTask]
+    tasks: [ChecklistTask]!
+    ownerId: String!
 }
 
 type ChecklistTask {
-    id: ID!,
-    text: String!,
-    completed: Boolean!,
+    id: ID!
+    text: String!
+    completed: Boolean!
     parentTask: ID
 }
 
 input TaskInput {
-    text: String!,
+    text: String!
     parentTask: ID
 }
 

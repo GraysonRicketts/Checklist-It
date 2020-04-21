@@ -3,11 +3,17 @@ import { QueryResult } from "pg";
 
 import { TemplateTask } from './TemplateTask.model';
 
-export type Template = {
-    id: string;
-    name: string;
-    tasks: TemplateTask[];
-    owners: string[];
+export class Template {
+    constructor(
+        public id: string, 
+        public name: string,
+        public tasks: TemplateTask[], 
+        public ownerIds: string[]
+    ) { }
+
+    public doesUserHaveAccess(userId: string) {
+        return this.ownerIds.includes(userId);
+    }
 }
 
 type TemplateInput = {
@@ -40,16 +46,16 @@ export default class TemplateRepository {
             throw Error('Template not found');
         }
 
-        return {
+        return new Template(
             id,
-            name: res[0].rows[0].name,
-            tasks: res[1].rows.map(row => ({
+            res[0].rows[0].name,
+            res[1].rows.map(row => ({
                 id: row.id,
                 text: row.text,
                 parentTask: row.parentTask
             })),
-            owners: res[2].rows.map(row => row.user_id)
-        } as Template;
+            res[2].rows.map(row => row.user_id)
+        );
     }
 
     public async insertOne(partialTemplate: TemplateInput, ownerId: string): Promise<Template> {
@@ -74,12 +80,12 @@ export default class TemplateRepository {
 
         const res = await this.db.transaction(requests);
         const { id } = res[0].rows[0];
-        const template: Template = {
+        const template = new Template(
             id,
-            tasks: [],
-            owners: [ownerId],
-            name
-        };
+            name,
+            [],
+            [ownerId]
+        );
 
         return template;
     }

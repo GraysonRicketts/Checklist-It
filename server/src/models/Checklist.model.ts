@@ -1,54 +1,82 @@
-export type Checklist = {
-    id: string;
-    name: string;
-    tasks: ChecklistTask[];
+import DB from "../config/database"
+import { TemplateTask } from "./TemplateTask.model";
+
+export class Checklist {
+    constructor(
+        public id: string, 
+        public name: string, 
+        public tasks: ChecklistTask[], 
+        public ownerId: string) { }
+
+        public doesUserHaveAccess(userId: string) {
+            return this.ownerId === userId;
+        }
 }
 
 export type ChecklistTask = {
     id: string;
     text: string;
-    completed: boolean;
-    parentTask?: string;
-}
-
-type ChecklistInput = {
-    name: string;
-    tasks: ChecklistTaskInput[];
-}
-
-type ChecklistTaskInput = {
-    text: string;
     parentTask?: string;
 }
 
 export default class ChecklistRepository {
-    private nextId: number;
-    private checklists: Checklist[];
-    constructor() {
-        this.checklists = [];
-        this.nextId = 1;
+    private db: DB;
+    constructor(db: DB) {
+        this.db = db;
     }
 
-    findOne(id: string): Checklist | void {
-        // TODO: make DB call
-        return this.checklists.find(c => c.id === id);
+    async findOne(id: string): Promise<Checklist | void> {
+        const res = await this.db.transaction([
+            {
+                query: 'SELECT id, name, owner_id as ownerId FROM checklists WHERE id=$1',
+                values: [id]
+            },
+            {
+                query: 'SELECT id, text, parent_task as parentTask, completed FROM checklist_task WHERE checklist_id=$1',
+                values: [id]
+            },
+        ]);
+
+        if (!res[0].rows.length) {
+            throw Error('Checklist not found');
+        }
+
+        return new Checklist(
+            id,
+            res[0].rows[0].name,
+            res[1].rows.map(row => ({
+                id: row.id,
+                text: row.text,
+                parentTask: row.parentTask,
+                completed: row.completed
+            })),
+            res[0].rows[0].userId
+        );
     }
 
-    getNextId(): string {
-        return (this.nextId++).toString();
-    }
+    async insertOne(name: string, tasks: TemplateTask[] , ownerId: string): Promise<Checklist> {
+        const res = await this.db.transaction([
+            {
+                query: 'INSERT INTO checklists (name, owner_id) VALUES ($1, $2) RETURNING id',
+                values: [name, ownerId],
+                callback: (res) => tasks.map(t => ({
+                    query: 'INSERT INTO checklist_task (text, parent_task, completed, checklist_id) VALUES ($1, $2, $3, $4) RETURNING id, text, parent_task',
+                    values: [t.text, t.parentTask, false, res.rows[0].id]
+                }))
+            }
+        ])
 
-    insertOne(partialChecklist: ChecklistInput, ownerId: string): Checklist {
-        const { name, tasks } = partialChecklist;
-        const checklist: Checklist = {
-            id: this.getNextId(),
-            tasks: tasks.map(t => ({...t, id: this.getNextId()} as ChecklistTask)),
-            name
-        };
-
-        // TODO: make DB call
-        this.checklists.push(checklist);
-
-        return checklist;
+        return new Checklist(
+            res[0].rows[0].id,
+            name,
+            !res[1].rows.length ? [] :
+                res[1].rows.map(r => ({
+                    id: r.id,
+                    text: r.text,
+                    parentTask: r.parent_task,
+                    completed: false
+                })),
+            ownerId
+        );
     }
 }

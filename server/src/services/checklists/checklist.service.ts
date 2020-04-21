@@ -9,25 +9,22 @@ export default class ChecklistService {
         this.checklistModel = checklistModel;
     }
 
-    public get(id: string, userId: string): Checklist | void {
-        const checklist = this.checklistModel.findOne(id);
-
-        return checklist;
+    public async get(id: string): Promise<Checklist | void> {
+        return await this.checklistModel.findOne(id);
     }
     
     public async add(name: string, templateId: string, userId: string): Promise<Checklist> {
         // Create checklist from template
         const template = await this.templateModel.findOne(templateId);
         if (!template) {
-            console.error(`Could not find template id ${templateId} in order to create checklist`);
-            throw new Error('Unable to create checklist');
+            throw new Error('Need template to create checklist');
         }
 
-        const tasks = template.tasks.map(t => ({
-            ...t,
-            completed: false
-        } as ChecklistTask));
+        if (!template.doesUserHaveAccess(userId)) {
+            console.error('User tried to access template they do not have access to')
+            return null;
+        }
 
-        return this.checklistModel.insertOne({name, tasks}, userId);
+        return this.checklistModel.insertOne(name, template.tasks, userId);
     }
 }
