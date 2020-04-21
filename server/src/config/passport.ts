@@ -1,7 +1,7 @@
 import { PassportStatic } from 'passport';
 import { Strategy as JwtStrategy , ExtractJwt} from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
-import UserRepository from '../models/User';
+import UserRepository from '../models/User.model';
 
 function createJwtStrategy(userModel: UserRepository): JwtStrategy {
   const opts = {

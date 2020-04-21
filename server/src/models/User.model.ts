@@ -1,5 +1,5 @@
-import { Template } from './Template';
-import { Checklist } from './Checklist';
+import { Template } from './Template.model';
+import { Checklist } from './Checklist.model';
 import crypto from 'crypto';
 import { Pool } from 'pg';
 import DB from '../config/database';

@@ -1,7 +1,7 @@
 import DB, { QueryRequest } from "../config/database";
 import { QueryResult } from "pg";
 
-import { TemplateTask } from '../models/TemplateTask';
+import { TemplateTask } from './TemplateTask.model';
 
 export type Template = {
     id: string;

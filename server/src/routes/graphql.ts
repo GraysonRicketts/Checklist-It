@@ -4,13 +4,13 @@ import { Request } from 'express';
 import schema from '../schemas';
 
 import TemplateService from '../services/templates/Template.service';
-import ChecklistService from '../services/checklists';
-import TemplateRepository from '../models/Template';
-import ChecklistRepository from '../models/Checklist';
-import { User } from '../models/User';
+import ChecklistService from '../services/checklists/checklist.service';
+import TemplateRepository from '../models/Template.model';
+import ChecklistRepository from '../models/Checklist.model';
+import { User } from '../models/User.model';
 import DB from '../config/database';
 import TemplateTaskService from '../services/templates/TemplateTask.service';
-import TemplateTaskRepository from '../models/TemplateTask';
+import TemplateTaskRepository from '../models/TemplateTask.model';
 
 
 

@@ -1,5 +1,5 @@
-import { Template } from '../../models/Template';
-import TemplateRepository from '../../models/Template';
+import { Template } from '../../models/Template.model';
+import TemplateRepository from '../../models/Template.model';
 
 export default class TemplateService {
     private templateModel: TemplateRepository;

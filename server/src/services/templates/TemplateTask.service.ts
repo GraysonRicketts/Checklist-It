@@ -1,4 +1,4 @@
-import TemplateTaskRepository, { TemplateTask } from "../../models/TemplateTask";
+import TemplateTaskRepository, { TemplateTask } from "../../models/TemplateTask.model";
 import TemplateService from "./Template.service";
 
 export default class TemplateTaskService {

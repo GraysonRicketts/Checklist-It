@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import appRouter from './routes';
-import UserRepository from './models/User';
+import UserRepository from './models/User.model';
 import { configurePassport as configureAuthentication } from './config/passport';
 import DB from './config/database';
 

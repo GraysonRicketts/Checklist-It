@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Request, NextFunction, Response } from 'express';
 import { PassportStatic } from 'passport';
-import { User } from '../models/User';
+import { User } from '../models/User.model';
 
 export function generateJwt(id: string, email: string) {
     const today = new Date();
