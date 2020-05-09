@@ -1,18 +1,25 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./pages/Home/Home";
-import Checklist from "./pages/checklist/Checklist";
+import { Header } from "./components/Header";
+import { Loader } from "./components/Loader";
+
+const pages: [string, React.FC][] = [
+  ["/checklist/:checklistId", lazy(() => import("./pages/Checklist"))],
+  ["/", lazy(() => import("./pages/Home/"))],
+];
 
 function App() {
   return (
     <Router>
+      <Header />
       <Switch>
-        <Route path="/checklist/:checklistId">
-          <Checklist />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
+        {pages.map(([path, Page]) => (
+          <Route key={path} path={path}>
+            <Suspense fallback={<Loader />}>
+              <Page />
+            </Suspense>
+          </Route>
+        ))}
       </Switch>
     </Router>
   );
