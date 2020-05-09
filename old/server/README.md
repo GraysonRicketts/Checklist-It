@@ -13,12 +13,14 @@
     - [x] get postgres on computer
     - [x] create seeder / setup file
     - [x] connect app to db
+    - [x] persistent store user model info in db
     - [x] persistent store for signup / login
     - [x] persistent store template
-    - [ ] persistent store for checklist
-    - [ ] persistent store user model info in db
-        - [ ] get templates when get user
-        - [ ] get checklists when get user
+    - [x] persistent store for checklist
+- [ ] add endpoint to mark tasks completed
+- [ ] get templates when get user
+- [ ] get checklists when get user
+- [ ] add ability to modify template tasks
 - [ ] checkout using Morgan for logging
 - [ ] create postman script so don't have to copy and paste token
 - [ ] add endpoint to complete tasks in checklist
@@ -32,11 +34,12 @@
     - [ ] install
     - [ ] setup
     - [ ] blurb
-- [ ] change template name
-- [ ] change checklist name
-- [ ] modify template
-- [ ] delete checklist
 - [ ] google authentication
+- [ ] add ability to change template name
+- [ ] add ability to change checklist name
+- [ ] add soft deletion
+- [ ] add ability to add or remove tasks from checklist
+- [ ] allow checklists to be created without template
 
 ## Setup
 
