@@ -1,7 +1,7 @@
 import React from "react";
 
 interface Props {
-  children: React.Component;
+  children: React.Component | JSX.Element;
 }
 
 export class ErrorBoundary extends React.Component<Props> {
