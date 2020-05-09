@@ -1,6 +1,7 @@
 import React from "react";
 import data from "../../checklistData.json";
 import { Task } from "../../api/models/Task.model";
+import styles from "./index.module.scss";
 
 interface TaskRowProp {
   task: Task;
@@ -19,9 +20,11 @@ export const TaskRow: React.FC<TaskRowProp> = ({ task, checklistId }) => {
     <div>
       <p>{task.text}</p>
 
-      {subTasks.map((t) => (
-        <TaskRow key={t.id} task={t} checklistId={checklistId} />
-      ))}
+      <div className={styles.subTasks}>
+        {subTasks.map((t) => (
+          <TaskRow key={t.id} task={t} checklistId={checklistId} />
+        ))}
+      </div>
     </div>
   );
 };
