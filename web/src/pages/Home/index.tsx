@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import data from "../../checklistData.json";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import data from '../../checklistData.json';
 
 const Home: React.FC = () => {
   return (

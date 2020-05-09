@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Props {
   children: React.Component | JSX.Element;
@@ -11,7 +11,7 @@ export class ErrorBoundary extends React.Component<Props> {
   }
 
   componentDidCatch(error: Error) {
-    console.log("Error boundary: ", error.message.toString());
+    console.log('Error boundary: ', error.message.toString());
   }
 
   render() {

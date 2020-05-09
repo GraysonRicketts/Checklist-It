@@ -1,7 +1,7 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import data from "../../checklistData.json";
-import { TaskRow } from "../../components/TaskRow";
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import data from '../../checklistData.json';
+import { TaskRow } from '../../components/TaskRow';
 
 const Checklist: React.FC = () => {
   const { checklistId } = useParams();

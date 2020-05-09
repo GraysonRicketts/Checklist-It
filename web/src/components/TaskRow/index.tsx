@@ -1,7 +1,7 @@
-import React from "react";
-import data from "../../checklistData.json";
-import { Task } from "../../api/models/Task.model";
-import styles from "./index.module.scss";
+import React from 'react';
+import data from '../../checklistData.json';
+import { Task } from '../../api/models/Task.model';
+import styles from './index.module.scss';
 
 interface TaskRowProp {
   task: Task;

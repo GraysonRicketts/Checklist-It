@@ -1,10 +1,10 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const headerLinks = [
   {
-    path: "/",
-    label: "Home",
+    path: '/',
+    label: 'Home',
   },
 ];
 

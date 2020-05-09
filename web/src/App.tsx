@@ -1,11 +1,11 @@
-import React, { lazy, Suspense } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Header } from "./components/Header";
-import { Loader } from "./components/Loader";
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Header } from './components/Header';
+import { Loader } from './components/Loader';
 
 const pages: [string, React.FC][] = [
-  ["/checklist/:checklistId", lazy(() => import("./pages/Checklist"))],
-  ["/", lazy(() => import("./pages/Home/"))],
+  ['/checklist/:checklistId', lazy(() => import('./pages/Checklist'))],
+  ['/', lazy(() => import('./pages/Home/'))],
   // TODO: 404
 ];
 
