@@ -1,0 +1,94 @@
+{
+  "checklists": [
+    {
+      "id": "1",
+      "name": "test",
+      "tasks": [
+        {
+          "id": "1",
+          "text": "clean kitchen",
+          "completed": false
+        },
+        {
+          "id": "2",
+          "text": "clean dishes",
+          "completed": true,
+          "parentTaskId": "1"
+        },
+        {
+          "id": "3",
+          "text": "put dishes away",
+          "completed": false,
+          "parentTaskId": "1"
+        },
+        {
+          "id": "6",
+          "text": "save lil' timmy's favorit bowl",
+          "completed": false,
+          "parentTaskId": "3"
+        },
+        {
+          "id": "7",
+          "text": "pat timmy on the head",
+          "completed": false,
+          "parentTaskId": "4"
+        },
+        {
+          "id": "4",
+          "text": "take out trash",
+          "completed": true
+        },
+        {
+          "id": "5",
+          "text": "relax",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "second test!!",
+      "tasks": [
+        {
+          "id": "1",
+          "text": "clean kitchen",
+          "completed": false
+        },
+        {
+          "id": "2",
+          "text": "clean dishes",
+          "completed": true,
+          "parentTaskId": "1"
+        },
+        {
+          "id": "3",
+          "text": "put dishes away",
+          "completed": false,
+          "parentTaskId": "1"
+        },
+        {
+          "id": "6",
+          "text": "save lil' timmy's favorit bowl",
+          "completed": false,
+          "parentTaskId": "3"
+        },
+        {
+          "id": "7",
+          "text": "pat timmy on the head",
+          "completed": false,
+          "parentTaskId": "4"
+        },
+        {
+          "id": "4",
+          "text": "take out trash",
+          "completed": true
+        },
+        {
+          "id": "5",
+          "text": "relax",
+          "completed": false
+        }
+      ]
+    }
+  ]
+}

@@ -6,6 +6,7 @@ import { Loader } from "./components/Loader";
 const pages: [string, React.FC][] = [
   ["/checklist/:checklistId", lazy(() => import("./pages/Checklist"))],
   ["/", lazy(() => import("./pages/Home/"))],
+  // TODO: 404
 ];
 
 function App() {
