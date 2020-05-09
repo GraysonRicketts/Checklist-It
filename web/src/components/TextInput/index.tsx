@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 
 interface Props {
   label: string;
@@ -17,8 +17,15 @@ export const TextInput: React.FC<Props> = ({
 }) => {
   return (
     <div>
-      <label>{label}</label>
-      <input type={type ? type : 'text'} />
+      <label className={hideLabel ? 'hidden' : undefined}>{label}</label>
+      <input
+        type={type ? type : 'text'}
+        value={value}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          const cleanValue = e.target.value;
+          onChange(cleanValue);
+        }}
+      />
     </div>
   );
 };
