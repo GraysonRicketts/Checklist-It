@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+.w100 {
+  width: 100%;
+}
+
+// visually hides an element while still making it accessible to screen readers
 .hidden {
   position:absolute;
   left:-10000px;
@@ -20,3 +25,25 @@ code {
   height:1px;
   overflow:hidden;
 }
+
+// flex
+.flex {
+  display: flex;
+}
+
+.flexColumn {
+  flex-direction: column;
+}
+
+.jcEnd {
+  justify-content: flex-end;
+}
+
+.jcSpaceBetween {
+  justify-content: space-between;
+}
+
+.aiCenter {
+  align-items: center;
+}
+

@@ -15,10 +15,14 @@ export const TextInput: React.FC<Props> = ({
   hideLabel,
   type,
 }) => {
+  const inputId = Math.random().toString();
   return (
     <div>
-      <label className={hideLabel ? 'hidden' : undefined}>{label}</label>
+      <label htmlFor={inputId} className={hideLabel ? 'hidden' : undefined}>
+        {label}
+      </label>
       <input
+        id={inputId}
         type={type ? type : 'text'}
         value={value}
         onChange={(e: ChangeEvent<HTMLInputElement>) => {

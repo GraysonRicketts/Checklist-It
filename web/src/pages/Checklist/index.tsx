@@ -17,9 +17,11 @@ const Checklist: React.FC = () => {
     <div>
       <h1>{checklist.name}</h1>
 
-      {topLevelTasks.map((task) => (
-        <TaskRow key={task.id} task={task} checklistId={checklistId} />
-      ))}
+      <div className="w100">
+        {topLevelTasks.map((task) => (
+          <TaskRow key={task.id} task={task} checklistId={checklistId} />
+        ))}
+      </div>
     </div>
   );
 };
