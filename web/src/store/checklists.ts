@@ -1,36 +1,37 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getBaseChecklists } from '../api/';
+import { getBaseChecklists } from '../api';
 import { BaseChecklistDTO } from '../api/dto/BaseChecklist.dto';
-import { AppThunk, RootState } from '.';
+import { AppThunk } from '.';
 
-export interface ChecklistState {
+export interface ChecklistsState {
   isLoading: boolean;
-  checklistsById: Record<string, BaseChecklistDTO>[];
+  currentChecklists: BaseChecklistDTO[];
   error: string;
 }
 
-const initialChecklistState: ChecklistState = {
+const initialState: ChecklistsState = {
   isLoading: false,
-  checklistsById: [],
+  currentChecklists: [],
   error: '',
 };
 
-const checklistslice = createSlice({
-  name: 'checklist',
-  initialState: initialChecklistState,
+const checklistsSlice = createSlice({
+  name: 'checklists',
+  initialState,
   reducers: {
-    _setStartLoadingBaseChecklists: (state: ChecklistState) => {
+    _setStartLoadingBaseChecklists: (state: ChecklistsState) => {
       state.isLoading = true;
     },
     _setBaseChecklistsSuccess: (
-      state: ChecklistState,
+      state: ChecklistsState,
       { payload }: PayloadAction<BaseChecklistDTO[]>,
     ) => {
-      state.checklistsById = payload.map((dto) => ({
-        [dto.id]: dto,
-      }));
+      state.currentChecklists = payload;
+      state.isLoading = false;
+      state.error = '';
     },
-    _setError(state: ChecklistState, { payload }: PayloadAction<string>) {
+    _setError(state: ChecklistsState, { payload }: PayloadAction<string>) {
+      state.isLoading = false;
       state.error = payload;
     },
   },
@@ -40,7 +41,7 @@ const {
   _setStartLoadingBaseChecklists,
   _setError,
   _setBaseChecklistsSuccess,
-} = checklistslice.actions;
+} = checklistsSlice.actions;
 
 export function fetchBaseChecklists(): AppThunk {
   return async (dispatch) => {
@@ -54,4 +55,4 @@ export function fetchBaseChecklists(): AppThunk {
   };
 }
 
-export default checklistslice.reducer;
+export default checklistsSlice.reducer;

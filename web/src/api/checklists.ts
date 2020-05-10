@@ -1,5 +1,4 @@
 import { BaseChecklistDTO } from './dto/BaseChecklist.dto';
-import { pick } from 'lodash';
 import data from '../checklistData.json';
 
 function timeout(ms: number): Promise<void> {
@@ -7,7 +6,7 @@ function timeout(ms: number): Promise<void> {
 }
 
 export async function getBaseChecklists(): Promise<BaseChecklistDTO[]> {
-  await timeout(3000);
+  await timeout(500);
   const dtoData = data.checklists.map((c) => ({
     id: c.id,
     name: c.name,

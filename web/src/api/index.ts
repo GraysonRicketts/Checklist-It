@@ -1,3 +1,4 @@
-import { getBaseChecklists } from './checklist';
+import { getBaseChecklists } from './checklists';
+import { getTasks } from './tasks';
 
-export { getBaseChecklists };
+export { getBaseChecklists, getTasks };

@@ -4,10 +4,12 @@ import {
   ThunkAction,
   Action,
 } from '@reduxjs/toolkit';
-import checklistReducer from './checklist';
+import checklistReducer from './checklists';
+import taskReducer from './tasks';
 
 const rootReducer = combineReducers({
-  checklist: checklistReducer,
+  checklists: checklistReducer,
+  tasks: taskReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
