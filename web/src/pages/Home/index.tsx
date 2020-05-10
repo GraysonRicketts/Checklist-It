@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBaseChecklists } from '../../store/checklists';
 import { RootState } from '../../store';
-import { stat } from 'fs';
 import { Loader } from '../../components/Loader';
 
 const Home: React.FC = () => {

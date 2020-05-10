@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { TaskRow } from '../../components/TaskRow';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
-import { fetchTasks } from '../../store/tasks';
+import { fetchTasks, toggleTaskCompleted, setText } from '../../store/tasks';
 import { Loader } from '../../components/Loader';
 
 const Checklist: React.FC = () => {
@@ -22,6 +22,14 @@ const Checklist: React.FC = () => {
 
   const topLevelTasks = tasks.filter((task) => !task.parentTaskId);
 
+  const onCompletedToggle = (taskId: string) => {
+    dispatch(toggleTaskCompleted(taskId));
+  };
+
+  const onTextChanged = (taskId: string, text: string) => {
+    dispatch(setText({ taskId, text }));
+  };
+
   return (
     <div>
       <h1>{checklist?.name}</h1>
@@ -29,8 +37,16 @@ const Checklist: React.FC = () => {
         <Loader />
       ) : (
         <div className="w100">
-          {topLevelTasks.map((task) => (
-            <TaskRow key={task.id} task={task} checklistId={checklistId} />
+          {topLevelTasks.map(({ id, completed, text }) => (
+            <TaskRow
+              key={id}
+              isChecked={completed}
+              text={text}
+              onChecked={() => onCompletedToggle(id)}
+              onChangeText={(text: string) => {
+                onTextChanged(id, text);
+              }}
+            />
           ))}
         </div>
       )}

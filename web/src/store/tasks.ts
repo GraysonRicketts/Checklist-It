@@ -35,8 +35,29 @@ const tasksSlice = createSlice({
       state.isLoading = false;
       state.error = payload;
     },
+    toggleTaskCompleted: (
+      state: TasksState,
+      { payload }: PayloadAction<string>,
+    ) => {
+      const task = state.currentTasks.find((t) => t.id === payload);
+      if (task) {
+        task.completed = !task.completed;
+      }
+    },
+    setText: (
+      state: TasksState,
+      { payload }: PayloadAction<{ taskId: string; text: string }>,
+    ) => {
+      const { taskId, text } = payload;
+      const task = state.currentTasks.find((t) => t.id == taskId);
+      if (task) {
+        task.text = text;
+      }
+    },
   },
 });
+
+export const { toggleTaskCompleted, setText } = tasksSlice.actions;
 
 const {
   _setError,
